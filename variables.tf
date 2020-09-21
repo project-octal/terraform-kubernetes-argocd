@@ -9,7 +9,7 @@ variable "argocd_version" {
 variable "namespace" {
   type        = string
   description = "The namespace this ArgoCD deployment will reside in."
-  default = "argocd"
+  default     = "argocd"
 }
 variable "replicas" {
   type        = number
