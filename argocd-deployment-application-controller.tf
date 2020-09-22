@@ -31,6 +31,15 @@ resource "kubernetes_deployment" "argocd_application_controller" {
           name              = "argocd-application-controller"
           image             = "${var.image_repository}/${var.argocd_repo_image}:v${var.argocd_version}"
           image_pull_policy = var.image_pull_policy
+          command = [
+            "argocd-application-controller",
+            "--status-processors",
+            "\"20\"",
+            "--operation-processors",
+            "\"10\"",
+            "--redis",
+            "argocd-redis-ha-haproxy:6379"
+          ]
           # TODO: Resource requirements will need to be declared
           resources {}
           liveness_probe {

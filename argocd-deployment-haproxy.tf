@@ -78,7 +78,7 @@ resource "kubernetes_deployment" "argocd_redis_ha_haproxy" {
           # TODO: Resource requirements will need to be declared
           resources {}
           volume_mount {
-            name = "data"
+            name       = "data"
             mount_path = "/usr/local/etc/haproxy"
           }
           volume_mount {
