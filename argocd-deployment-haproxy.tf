@@ -21,14 +21,20 @@ resource "kubernetes_deployment" "argocd_redis_ha_haproxy" {
     template {
       metadata {
         name = "argocd-redis-ha-haproxy"
-        labels = {
+        labels = merge({
           "app.kubernetes.io/name": "argocd-redis-ha-haproxy"
-        }
+        }, var.labels)
         annotations = {
           "checksum/config": "790be9eae7c7e468c497c0256949ab96cb3f14b935c6702424647c3c60fba91c"
         }
       }
       spec {
+        service_account_name = kubernetes_service_account.argocd_redis_ha_haproxy.metadata.0.name
+        security_context {
+          run_as_non_root = var.haproxy_run_as_non_root
+          fs_group = var.haproxy_fs_group
+          run_as_user = var.haproxy_run_as_user
+        }
         affinity {
           pod_anti_affinity {
             preferred_during_scheduling_ignored_during_execution {
@@ -54,7 +60,7 @@ resource "kubernetes_deployment" "argocd_redis_ha_haproxy" {
         }
         container {
           name = "haproxy"
-          image = "${var.image_repository}/haproxy:${var.haproxy_version}"
+          image = "${var.image_repository}/${var.haproxy_image}:${var.haproxy_version}"
           image_pull_policy = var.image_pull_policy
           liveness_probe {
             http_get {
@@ -77,7 +83,7 @@ resource "kubernetes_deployment" "argocd_redis_ha_haproxy" {
         }
         init_container {
           name = "config-init"
-          image = "${var.image_repository}/haproxy:${var.haproxy_version}"
+          image = "${var.image_repository}/${var.haproxy_image}:${var.haproxy_version}"
           image_pull_policy = var.image_pull_policy
           command = ["sh"]
           args = ["/readonly/haproxy_init.sh"]
@@ -93,12 +99,6 @@ resource "kubernetes_deployment" "argocd_redis_ha_haproxy" {
             mount_path = "/data"
           }
         }
-        security_context {
-          run_as_non_root = var.run_as_non_root
-          fs_group = var.fs_group
-          run_as_user = var.run_as_user
-        }
-        service_account_name = "argocd-redis-ha-haproxy"
         volume {
           name = "config-volume"
           config_map {

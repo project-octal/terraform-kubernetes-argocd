@@ -1,12 +1,6 @@
 ###########################
 ## ArgoCD Configurations ##
 ###########################
-variable "argocd_version" {
-  type        = string
-  description = "The version of ArgoCD to deploy."
-  default     = "1.7.6"
-}
-
 variable "namespace" {
   type        = string
   description = "The namespace this ArgoCD deployment will reside in."
@@ -29,25 +23,100 @@ variable "labels" {
   default     = {}
 }
 
-
-
+############################
+## HAProxy Configurations ##
+############################
+variable "haproxy_image" {
+  type = string
+  description = ""
+  default = ""
+}
 variable "haproxy_version" {
   type = string
   description = "Defines which docker image tag to use for HAProxy"
   default = "2.0.4"
 }
-
-variable "fs_group" {
+variable "haproxy_fs_group" {
   type = number
   description = ""
   default = 1000
 }
-variable "run_as_non_root" {
+variable "haproxy_run_as_non_root" {
   type = bool
   description = ""
   default = true
 }
-variable "run_as_user" {
+variable "haproxy_run_as_user" {
+  type = number
+  description = ""
+  default = 1000
+}
+
+###########################
+## ArgoCD Configurations ##
+###########################
+variable "argocd_server_image" {
+  type = string
+  description = ""
+  default = "argoproj/argocd"
+}
+variable "argocd_server_version" {
+  type        = string
+  description = "The version of ArgoCD to deploy."
+  default     = "1.7.6"
+}
+
+variable "argocd_repo_image" {
+  type = string
+  description = ""
+  default = "argoproj/argocd"
+}
+variable "argocd_repo_version" {
+  type        = string
+  description = "The version of ArgoCD to deploy."
+  default     = "1.7.6"
+}
+
+variable "argocd_fs_group" {
+  type = number
+  description = ""
+  default = 1000
+}
+variable "argocd_run_as_non_root" {
+  type = bool
+  description = ""
+  default = true
+}
+variable "argocd_run_as_user" {
+  type = number
+  description = ""
+  default = 1000
+}
+
+########################
+## Dex Configurations ##
+########################
+  type = string
+variable "dex_image" {
+  description = ""
+  default = "quay.io/dexidp/dex"
+}
+variable "dex_version" {
+  type        = string
+  description = "The version of Dex to deploy."
+  default     = "v2.22.0"
+}
+variable "dex_fs_group" {
+  type = number
+  description = ""
+  default = 1000
+}
+variable "dex_run_as_non_root" {
+  type = bool
+  description = ""
+  default = true
+}
+variable "dex_run_as_user" {
   type = number
   description = ""
   default = 1000
