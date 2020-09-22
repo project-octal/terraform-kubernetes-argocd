@@ -61,7 +61,7 @@ resource "kubernetes_deployment" "argocd_redis_ha_haproxy" {
         }
         container {
           name              = "haproxy"
-          image             = "${var.image_repository}/${var.haproxy_image}:v${var.haproxy_version}"
+          image             = "${var.image_repository}/${var.haproxy_image}:${var.haproxy_version}"
           image_pull_policy = var.image_pull_policy
           liveness_probe {
             http_get {
@@ -84,7 +84,7 @@ resource "kubernetes_deployment" "argocd_redis_ha_haproxy" {
         }
         init_container {
           name              = "config-init"
-          image             = "${var.image_repository}/${var.haproxy_image}:v${var.haproxy_version}"
+          image             = "${var.image_repository}/${var.haproxy_image}:${var.haproxy_version}"
           image_pull_policy = var.image_pull_policy
           command           = ["sh"]
           args              = ["/readonly/haproxy_init.sh"]
