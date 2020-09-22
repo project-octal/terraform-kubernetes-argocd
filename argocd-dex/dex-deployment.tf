@@ -26,7 +26,7 @@ resource "kubernetes_deployment" "dex_server" {
         security_context {}
         container {
           name              = "dex"
-          image             = "${local.image_repository}/${var.dex_image}:v${var.dex_version}"
+          image             = "${var.image_repository}/${var.dex_image}:v${var.dex_version}"
           image_pull_policy = var.image_pull_policy
           command           = [
             "/shared/argocd-util",
@@ -52,7 +52,7 @@ resource "kubernetes_deployment" "dex_server" {
         }
         init_container {
           name              = "copyutil"
-          image             = "${local.image_repository}/${var.dex_image}:v${var.dex_version}"
+          image             = "${var.image_repository}/${var.argocd_server_image}:v${var.argocd_version}"
           image_pull_policy = var.image_pull_policy
           command           = [
             "cp",

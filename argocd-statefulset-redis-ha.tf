@@ -62,7 +62,7 @@ resource "kubernetes_stateful_set" "argocd_redis_ha" {
 
         init_container {
           name              = "config-init"
-          image             = "${local.image_repository}/${var.redis_image}:${var.redis_version}"
+          image             = "${var.image_repository}/${var.redis_image}:${var.redis_version}"
           image_pull_policy = var.image_pull_policy
           command           = ["sh"]
           args              = ["/readonly-config/init.sh"]
@@ -93,7 +93,7 @@ resource "kubernetes_stateful_set" "argocd_redis_ha" {
 
         container {
           name              = "redis"
-          image             = "${local.image_repository}/${var.redis_image}:${var.redis_version}"
+          image             = "${var.image_repository}/${var.redis_image}:${var.redis_version}"
           image_pull_policy = var.image_pull_policy
           command           = ["redis-server"]
           args              = ["/data/conf/redis.conf"]
@@ -118,7 +118,7 @@ resource "kubernetes_stateful_set" "argocd_redis_ha" {
 
         container {
           name              = "sentinel"
-          image             = "${local.image_repository}/${var.redis_image}:${var.redis_version}"
+          image             = "${var.image_repository}/${var.redis_image}:${var.redis_version}"
           image_pull_policy = var.image_pull_policy
           command           = ["redis-sentinel"]
           args              = ["/data/conf/sentinel.conf"]

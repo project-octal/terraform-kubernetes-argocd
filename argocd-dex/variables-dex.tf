@@ -8,7 +8,6 @@ variable "namespace" {
 variable "image_repository" {
   type        = string
   description = "The image repository to use when pulling images."
-  default     = null
 }
 variable "image_pull_policy" {
   type        = string
@@ -17,6 +16,16 @@ variable "image_pull_policy" {
 variable "labels" {
   type        = map(string)
   description = "Extra Kubernetes labels to include with the resources created by this module"
+}
+variable "argocd_version" {
+  type        = string
+  description = "The version of ArgoCD to deploy."
+  default     = "1.7.6"
+}
+variable "argocd_server_image" {
+  type        = string
+  description = "The image to use for the `argocd-server` deployment"
+  default     = "argoproj/argocd"
 }
 
 #######################
