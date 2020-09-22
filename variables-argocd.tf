@@ -21,14 +21,9 @@ variable "image_pull_policy" {
   description = "Determines when the image should be pulled prior to starting the container. `Always`: Always pull the image. | `IfNotPresent`: Only pull the image if it does not already exist on the node. | `Never`: Never pull the image"
   default     = "Always"
 }
-variable "labels" {
-  type        = map(string)
-  description = "Extra Kubernetes labels to include with the resources created by this module"
-  default     = {}
-}
 variable "argocd_server_image" {
   type        = string
-  description = ""
+  description = "The image to use for the "
   default     = "argoproj/argocd"
 }
 variable "argocd_repo_image" {
@@ -50,4 +45,9 @@ variable "argocd_run_as_user" {
   type        = number
   description = ""
   default     = 1000
+}
+variable "labels" {
+  type        = map(string)
+  description = "Extra Kubernetes labels to include with the resources created by this module"
+  default     = {}
 }

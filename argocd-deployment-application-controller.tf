@@ -34,9 +34,9 @@ resource "kubernetes_deployment" "argocd_application_controller" {
           command = [
             "argocd-application-controller",
             "--status-processors",
-            "\"20\"",
+            "20",
             "--operation-processors",
-            "\"10\"",
+            "10",
             "--redis",
             "argocd-redis-ha-haproxy:6379"
           ]
