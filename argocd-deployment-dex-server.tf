@@ -28,7 +28,10 @@ resource "kubernetes_deployment" "argocd_dex_server" {
           name              = "dex"
           image             = "${var.image_repository}/${var.dex_image}:v${var.dex_version}"
           image_pull_policy = var.image_pull_policy
-          command           = ["/shared/argocd-util", "rundex"]
+          command           = [
+            "/shared/argocd-util",
+            "rundex"
+          ]
           # TODO: Add these!
           # resources {}
           # liveness_probe {}
@@ -51,7 +54,12 @@ resource "kubernetes_deployment" "argocd_dex_server" {
           name              = "copyutil"
           image             = "${var.image_repository}/${var.dex_image}:v${var.dex_version}"
           image_pull_policy = var.image_pull_policy
-          command           = ["cp", "-n", "/usr/local/bin/argocd-util", "/shared"]
+          command           = [
+            "cp",
+            #"-n",
+            "/usr/local/bin/argocd-util",
+            "/shared"
+          ]
           # TODO: Add these!
           # resources {}
           volume_mount {
