@@ -2,15 +2,15 @@ resource "kubernetes_role_binding" "argocd_redis_ha" {
   metadata {
     name = argocd-redis-ha
     labels = merge({
-      "app.kubernetes.io/name": "argocd-redis-ha"
-      "app.kubernetes.io/component": "redis"
-      "app.kubernetes.io/part-of": "argocd"
+      "app.kubernetes.io/name" : "argocd-redis-ha"
+      "app.kubernetes.io/component" : "redis"
+      "app.kubernetes.io/part-of" : "argocd"
     }, var.labels)
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
-    kind = "Role"
-    name = "argocd-redis-ha"
+    kind      = "Role"
+    name      = "argocd-redis-ha"
   }
   subject {
     kind = "ServiceAccount"
@@ -22,15 +22,15 @@ resource "kubernetes_role_binding" "argocd_application_controller" {
   metadata {
     name = "argocd-application-controller"
     labels = merge({
-      "app.kubernetes.io/name": "argocd-application-controller"
-      "app.kubernetes.io/component": "application-controller"
-      "app.kubernetes.io/part-of": "argocd"
+      "app.kubernetes.io/name" : "argocd-application-controller"
+      "app.kubernetes.io/component" : "application-controller"
+      "app.kubernetes.io/part-of" : "argocd"
     }, var.labels)
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
-    kind = "Role"
-    name = "argocd-application-controller"
+    kind      = "Role"
+    name      = "argocd-application-controller"
   }
   subject {
     kind = "ServiceAccount"
@@ -38,19 +38,19 @@ resource "kubernetes_role_binding" "argocd_application_controller" {
   }
 }
 
-resource "kubernetes_role_binding" "argocd-dex-server" {
+resource "kubernetes_role_binding" "argocd_dex_server" {
   metadata {
     name = argocd-dex-server
     labels = merge({
-      "app.kubernetes.io/name": "argocd-dex-server"
-      "app.kubernetes.io/component": "dex-server"
-      "app.kubernetes.io/part-of": "argocd"
+      "app.kubernetes.io/name" : "argocd-dex-server"
+      "app.kubernetes.io/component" : "dex-server"
+      "app.kubernetes.io/part-of" : "argocd"
     }, var.labels)
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
-    kind = "Role"
-    name = "argocd-dex-server"
+    kind      = "Role"
+    name      = "argocd-dex-server"
   }
   subject {
     kind = "ServiceAccount"
@@ -62,15 +62,15 @@ resource "kubernetes_role_binding" "argocd_server" {
   metadata {
     name = argocd-server
     labels = merge({
-      "app.kubernetes.io/name": "argocd-server"
-      "app.kubernetes.io/component": "server"
-      "app.kubernetes.io/part-of": "argocd"
+      "app.kubernetes.io/name" : "argocd-server"
+      "app.kubernetes.io/component" : "server"
+      "app.kubernetes.io/part-of" : "argocd"
     }, var.labels)
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
-    kind = "Role"
-    name = "argocd-server"
+    kind      = "Role"
+    name      = "argocd-server"
   }
   subject {
     kind = "ServiceAccount"
