@@ -15,22 +15,7 @@ resource "kubernetes_role" "argocd_redis_ha" {
   }
 }
 
-resource "kubernetes_role" "argocd_dex_server" {
-  metadata {
-    name      = "argocd-dex-server"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
-    labels = merge({
-      "app.kubernetes.io/name" : "argocd-dex-server"
-      "app.kubernetes.io/component" : "dex-server"
-      "app.kubernetes.io/part-of" : "argocd"
-    }, var.labels)
-  }
-  rule {
-    api_groups = [""]
-    resources  = ["secrets", "configmaps"]
-    verbs      = ["get", "list", "watch"]
-  }
-}
+
 
 resource "kubernetes_role" "argocd_server" {
   metadata {

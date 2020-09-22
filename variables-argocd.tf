@@ -14,7 +14,7 @@ variable "namespace" {
 variable "image_repository" {
   type        = string
   description = "The image repository to use when pulling images."
-  default     = "registry.hub.docker.com"
+  default     = null
 }
 variable "image_pull_policy" {
   type        = string

@@ -1,7 +1,7 @@
-resource "kubernetes_deployment" "argocd_dex_server" {
+resource "kubernetes_deployment" "dex_server" {
   metadata {
     name      = "argocd-dex-server"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
+    namespace = var.namespace
     labels = merge({
       "app.kubernetes.io/name" : "argocd-dex-server"
       "app.kubernetes.io/component" : "dex-server"
@@ -21,7 +21,7 @@ resource "kubernetes_deployment" "argocd_dex_server" {
         }, var.labels)
       }
       spec {
-        service_account_name = kubernetes_service_account.argocd_dex_server.metadata.0.name
+        service_account_name = kubernetes_service_account.dex_server.metadata.0.name
         # TODO: Add this!
         security_context {}
         container {
@@ -52,11 +52,11 @@ resource "kubernetes_deployment" "argocd_dex_server" {
         }
         init_container {
           name              = "copyutil"
-          image             = "${var.image_repository}/${var.dex_image}:v${var.dex_version}"
+          image             = "${local.image_repository}/${var.dex_image}:v${var.dex_version}"
           image_pull_policy = var.image_pull_policy
           command           = [
             "cp",
-            #"-n",
+            "-n",
             "/usr/local/bin/argocd-util",
             "/shared"
           ]

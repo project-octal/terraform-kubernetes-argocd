@@ -48,7 +48,7 @@ resource "kubernetes_deployment" "argocd_repo_server" {
         automount_service_account_token = false
         container {
           name              = "argocd-repo-server"
-          image             = "${var.image_repository}/${var.argocd_repo_image}:v${var.argocd_version}"
+          image             = "${local.image_repository}/${var.argocd_repo_image}:v${var.argocd_version}"
           image_pull_policy = var.image_pull_policy
           command           = ["uid_entrypoint.sh", "argocd-repo-server", "--redis", "argocd-redis-ha-haproxy:6379"]
           # TODO: Add these!

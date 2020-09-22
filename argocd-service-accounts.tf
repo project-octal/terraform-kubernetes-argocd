@@ -24,17 +24,7 @@ resource "kubernetes_service_account" "argocd_redis_ha" {
 
 
 
-resource "kubernetes_service_account" "argocd_dex_server" {
-  metadata {
-    name      = "argocd-dex-server"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
-    labels = merge({
-      "app.kubernetes.io/name" : "argocd-dex-server"
-      "app.kubernetes.io/component" : "dex-server"
-      "app.kubernetes.io/part-of" : "argocd"
-    }, var.labels)
-  }
-}
+
 
 resource "kubernetes_service_account" "argocd_server" {
   metadata {
