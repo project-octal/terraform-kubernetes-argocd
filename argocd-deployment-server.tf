@@ -1,7 +1,7 @@
 resource "kubernetes_deployment" "argocd_server" {
   metadata {
     name      = "argocd-server"
-    namespace = var.namespace
+    namespace = kubernetes_namespace.argocd_namespace.metadata.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-server"
       "app.kubernetes.io/component" : "server"

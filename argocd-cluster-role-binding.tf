@@ -15,7 +15,7 @@ resource "kubernetes_cluster_role_binding" "argocd_application_controller" {
   subject {
     kind      = "ServiceAccount"
     name      = "argocd-application-controller"
-    namespace = var.namespace
+    namespace = kubernetes_namespace.argocd_namespace.metadata.name
   }
 }
 
@@ -36,6 +36,6 @@ resource "kubernetes_cluster_role_binding" "argocd_server" {
   subject {
     kind      = "ServiceAccount"
     name      = "argocd-server"
-    namespace = var.namespace
+    namespace = kubernetes_namespace.argocd_namespace.metadata.name
   }
 }

@@ -1,7 +1,7 @@
 resource "kubernetes_config_map" "argocd_redis_ha_configmap" {
   metadata {
     name      = "argocd-redis-ha-configmap"
-    namespace = var.namespace
+    namespace = kubernetes_namespace.argocd_namespace.metadata.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-redis-ha"
       "app.kubernetes.io/component" : "redis"
@@ -20,7 +20,7 @@ resource "kubernetes_config_map" "argocd_redis_ha_configmap" {
 resource "kubernetes_config_map" "argocd_cm" {
   metadata {
     name      = "argocd-cm"
-    namespace = var.namespace
+    namespace = kubernetes_namespace.argocd_namespace.metadata.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-cm"
       "app.kubernetes.io/part-of" : "argocd"
@@ -31,7 +31,7 @@ resource "kubernetes_config_map" "argocd_cm" {
 resource "kubernetes_config_map" "argocd_gpg_keys_cm" {
   metadata {
     name      = "argocd-gpg-keys-cm"
-    namespace = var.namespace
+    namespace = kubernetes_namespace.argocd_namespace.metadata.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-gpg-keys-cm"
       "app.kubernetes.io/part-of" : "argocd"
@@ -42,7 +42,7 @@ resource "kubernetes_config_map" "argocd_gpg_keys_cm" {
 resource "kubernetes_config_map" "argocd_rbac_cm" {
   metadata {
     name      = "argocd-rbac-cm"
-    namespace = var.namespace
+    namespace = kubernetes_namespace.argocd_namespace.metadata.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-rbac-cm"
       "app.kubernetes.io/part-of" : "argocd"
@@ -53,7 +53,7 @@ resource "kubernetes_config_map" "argocd_rbac_cm" {
 resource "kubernetes_config_map" "argocd_ssh_known_hosts_cm" {
   metadata {
     name      = "argocd-ssh-known-hosts-cm"
-    namespace = var.namespace
+    namespace = kubernetes_namespace.argocd_namespace.metadata.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-ssh-known-hosts-cm"
       "app.kubernetes.io/part-of" : "argocd"
@@ -67,7 +67,7 @@ resource "kubernetes_config_map" "argocd_ssh_known_hosts_cm" {
 resource "kubernetes_config_map" "argocd_tls_certs_cm" {
   metadata {
     name      = "argocd-tls-certs-cm"
-    namespace = var.namespace
+    namespace = kubernetes_namespace.argocd_namespace.metadata.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-tls-certs-cm"
       "app.kubernetes.io/part-of" : "argocd"

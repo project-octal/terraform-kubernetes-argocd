@@ -1,6 +1,7 @@
 resource "kubernetes_role_binding" "argocd_redis_ha" {
   metadata {
     name = "argocd-redis-ha"
+    namespace = kubernetes_namespace.argocd_namespace.metadata.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-redis-ha"
       "app.kubernetes.io/component" : "redis"
@@ -21,6 +22,7 @@ resource "kubernetes_role_binding" "argocd_redis_ha" {
 resource "kubernetes_role_binding" "argocd_application_controller" {
   metadata {
     name = "argocd-application-controller"
+    namespace = kubernetes_namespace.argocd_namespace.metadata.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-application-controller"
       "app.kubernetes.io/component" : "application-controller"
@@ -41,6 +43,7 @@ resource "kubernetes_role_binding" "argocd_application_controller" {
 resource "kubernetes_role_binding" "argocd_dex_server" {
   metadata {
     name = "argocd-dex-server"
+    namespace = kubernetes_namespace.argocd_namespace.metadata.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-dex-server"
       "app.kubernetes.io/component" : "dex-server"
@@ -61,7 +64,7 @@ resource "kubernetes_role_binding" "argocd_dex_server" {
 resource "kubernetes_role_binding" "argocd_server" {
   metadata {
     name      = "argocd-server"
-    namespace = var.namespace
+    namespace = kubernetes_namespace.argocd_namespace.metadata.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-server"
       "app.kubernetes.io/component" : "server"

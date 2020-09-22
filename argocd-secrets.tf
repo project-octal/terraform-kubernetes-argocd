@@ -1,7 +1,7 @@
 resource "kubernetes_secret" "argocd_secret" {
   metadata {
     name      = "argocd-secret"
-    namespace = var.namespace
+    namespace = kubernetes_namespace.argocd_namespace.metadata.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-secret"
       "app.kubernetes.io/part-of" : "argocd"
