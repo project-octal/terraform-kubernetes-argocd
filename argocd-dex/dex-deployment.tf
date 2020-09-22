@@ -26,7 +26,7 @@ resource "kubernetes_deployment" "dex_server" {
         security_context {}
         container {
           name              = "dex"
-          image             = "${var.image_repository}/${var.dex_image}:v${var.dex_version}"
+          image             = "${local.image_repository}/${var.dex_image}:v${var.dex_version}"
           image_pull_policy = var.image_pull_policy
           command           = [
             "/shared/argocd-util",
