@@ -62,8 +62,8 @@ resource "kubernetes_deployment" "argocd_server" {
             container_port = 8083
           }
           # TODO: Add these!
-          resources {}
-          liveness_probe {}
+          # resources {}
+          # liveness_probe {}
           readiness_probe {
             http_get {
               path = "/healthz"

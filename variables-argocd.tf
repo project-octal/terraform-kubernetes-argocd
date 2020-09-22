@@ -23,17 +23,17 @@ variable "image_pull_policy" {
 }
 variable "argocd_server_image" {
   type        = string
-  description = "The image to use for the "
+  description = "The image to use for the `argocd-server` deployment"
   default     = "argoproj/argocd"
 }
 variable "argocd_repo_image" {
   type        = string
-  description = ""
+  description = "The image to use for the `argocd-repo-server` deployment"
   default     = "argoproj/argocd"
 }
 variable "argocd_fs_group" {
   type        = number
-  description = ""
+  description = "Sets the ownership and permissions for the contents of each mounted volume."
   default     = 1000
 }
 variable "argocd_run_as_non_root" {

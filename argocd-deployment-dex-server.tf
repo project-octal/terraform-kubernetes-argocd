@@ -30,9 +30,9 @@ resource "kubernetes_deployment" "argocd_dex_server" {
           image_pull_policy = var.image_pull_policy
           command           = ["/shared/argocd-util", "rundex"]
           # TODO: Add these!
-          resources {}
-          liveness_probe {}
-          readiness_probe {}
+          # resources {}
+          # liveness_probe {}
+          # readiness_probe {}
           port {
             container_port = 5556
           }
@@ -53,7 +53,7 @@ resource "kubernetes_deployment" "argocd_dex_server" {
           image_pull_policy = var.image_pull_policy
           command           = ["cp", "-n", "/usr/local/bin/argocd-util", "/shared"]
           # TODO: Add these!
-          resources {}
+          # resources {}
           volume_mount {
             name       = "static-files"
             mount_path = "/shared"

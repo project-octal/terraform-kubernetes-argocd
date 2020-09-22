@@ -1,3 +1,83 @@
+resource "kubernetes_service_account" "argocd_application_controller" {
+  metadata {
+    name      = "argocd-application-controller"
+    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
+    labels = merge({
+      "app.kubernetes.io/name" : "argocd-application-controller"
+      "app.kubernetes.io/component" : "application-controller"
+      "app.kubernetes.io/part-of" : "argocd"
+    }, var.labels)
+  }
+}
+
+resource "kubernetes_role" "argocd_application_controller" {
+  metadata {
+    name      = "argocd-application-controller"
+    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
+    labels = merge({
+      "app.kubernetes.io/name" : "argocd-application-controller"
+      "app.kubernetes.io/component" : "application-controller"
+      "app.kubernetes.io/part-of" : "argocd"
+    }, var.labels)
+  }
+  rule {
+    api_groups = [""]
+    resources  = ["secrets", "configmaps"]
+    verbs      = ["get", "list", "watch"]
+  }
+  rule {
+    api_groups = [""]
+    resources  = ["events"]
+    verbs      = ["create", "list"]
+  }
+  rule {
+    api_groups = ["argoproj.io"]
+    resources  = ["applications", "appprojects"]
+    verbs      = ["create", "get", "list", "watch", "update", "patch", "delete"]
+  }
+}
+
+resource "kubernetes_role_binding" "argocd_application_controller" {
+  metadata {
+    name      = "argocd-application-controller"
+    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
+    labels = merge({
+      "app.kubernetes.io/name" : "argocd-application-controller"
+      "app.kubernetes.io/component" : "application-controller"
+      "app.kubernetes.io/part-of" : "argocd"
+    }, var.labels)
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Role"
+    name      = "argocd-application-controller"
+  }
+  subject {
+    kind = "ServiceAccount"
+    name = "argocd-application-controller"
+  }
+}
+
+resource "kubernetes_cluster_role" "argocd_application_controller" {
+  metadata {
+    name = "argocd-application-controller"
+    labels = merge({
+      "app.kubernetes.io/name" : "argocd-application-controller"
+      "app.kubernetes.io/component" : "application-controller"
+      "app.kubernetes.io/part-of" : "argocd"
+    }, var.labels)
+  }
+  rule {
+    api_groups = ["*"]
+    resources  = ["*"]
+    verbs      = ["*"]
+  }
+  rule {
+    non_resource_urls = ["*"]
+    verbs             = ["*"]
+  }
+}
+
 resource "kubernetes_deployment" "argocd_application_controller" {
   metadata {
     name      = "argocd-application-controller"

@@ -52,8 +52,8 @@ resource "kubernetes_deployment" "argocd_repo_server" {
           image_pull_policy = var.image_pull_policy
           command           = ["uid_entrypoint.sh", "argocd-repo-server", "--redis", "argocd-redis-ha-haproxy:6379"]
           # TODO: Add these!
-          resources {}
-          liveness_probe {}
+          # resources {}
+          # liveness_probe {}
           readiness_probe {
             tcp_socket {
               port = 8081
