@@ -120,8 +120,8 @@ variable "redis_run_as_user" {
 ########################
 ## Dex Configurations ##
 ########################
-type = string
 variable "dex_image" {
+  type        = string
   description = ""
   default     = "quay.io/dexidp/dex"
 }

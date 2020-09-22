@@ -1,6 +1,6 @@
 resource "kubernetes_cluster_role_binding" "argocd_application_controller" {
   metadata {
-    name = argocd-application-controller
+    name = "argocd-application-controller"
     labels = merge({
       "app.kubernetes.io/name" : "argocd-application-controller"
       "app.kubernetes.io/component" : "application-controller"
@@ -21,7 +21,7 @@ resource "kubernetes_cluster_role_binding" "argocd_application_controller" {
 
 resource "kubernetes_cluster_role_binding" "argocd_server" {
   metadata {
-    name = argocd-server
+    name = "argocd-server"
     labels = merge({
       "app.kubernetes.io/name" : "argocd-server"
       "app.kubernetes.io/component" : "server"
