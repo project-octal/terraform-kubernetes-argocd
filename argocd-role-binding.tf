@@ -14,8 +14,8 @@ resource "kubernetes_role_binding" "argocd_redis_ha" {
     name      = kubernetes_service_account.argocd_redis_ha.metadata.0.name
   }
   subject {
-    kind = "ServiceAccount"
-    name = kubernetes_service_account.argocd_redis_ha.metadata.0.name
+    kind      = "ServiceAccount"
+    name      = kubernetes_service_account.argocd_redis_ha.metadata.0.name
     namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
   }
 }
@@ -36,8 +36,8 @@ resource "kubernetes_role_binding" "argocd_server" {
     name      = kubernetes_role.argocd_server.metadata.0.name
   }
   subject {
-    kind = "ServiceAccount"
-    name = kubernetes_service_account.argocd_server.metadata.0.name
+    kind      = "ServiceAccount"
+    name      = kubernetes_service_account.argocd_server.metadata.0.name
     namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
   }
 }

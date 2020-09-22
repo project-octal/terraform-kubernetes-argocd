@@ -158,63 +158,9 @@ resource "kubernetes_service" "argocd_redis_ha" {
   }
 }
 
-resource "kubernetes_service" "argocd_dex_server" {
-  metadata {
-    name      = "argocd-dex-server"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
-    labels = merge({
-      "app.kubernetes.io/name" : "argocd-dex-server"
-      "app.kubernetes.io/component" : "dex-server"
-      "app.kubernetes.io/part-of" : "argocd"
-    }, var.labels)
-  }
-  spec {
-    port {
-      name        = "http"
-      protocol    = "TCP"
-      port        = 5556
-      target_port = 5556
-    }
-    port {
-      name        = "grpc"
-      protocol    = "TCP"
-      port        = 5557
-      target_port = 5557
-    }
-    port {
-      name        = "metrics"
-      protocol    = "TCP"
-      port        = 5558
-      target_port = 5558
-    }
-    selector = {
-      "app.kubernetes.io/name" : "argocd-dex-server"
-    }
-  }
-}
 
-resource "kubernetes_service" "argocd_metrics" {
-  metadata {
-    name      = "argocd-metrics"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
-    labels = merge({
-      "app.kubernetes.io/name" : "argocd-metrics"
-      "app.kubernetes.io/component" : "metrics"
-      "app.kubernetes.io/part-of" : "argocd"
-    }, var.labels)
-  }
-  spec {
-    port {
-      name        = "metrics"
-      protocol    = "TCP"
-      port        = 8082
-      target_port = 8082
-    }
-    selector = {
-      "app.kubernetes.io/name" : "argocd-application-controller"
-    }
-  }
-}
+
+
 
 resource "kubernetes_service" "argocd_repo_server" {
   metadata {
