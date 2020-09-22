@@ -29,7 +29,7 @@ variable "labels" {
 variable "haproxy_image" {
   type        = string
   description = ""
-  default     = ""
+  default     = "haproxy"
 }
 variable "haproxy_version" {
   type        = string
@@ -55,23 +55,21 @@ variable "haproxy_run_as_user" {
 ###########################
 ## ArgoCD Configurations ##
 ###########################
-variable "argocd_server_image" {
-  type        = string
-  description = ""
-  default     = "argoproj/argocd"
-}
 variable "argocd_version" {
   type        = string
   description = "The version of ArgoCD to deploy."
   default     = "1.7.6"
 }
-
+variable "argocd_server_image" {
+  type        = string
+  description = ""
+  default     = "argoproj/argocd"
+}
 variable "argocd_repo_image" {
   type        = string
   description = ""
   default     = "argoproj/argocd"
 }
-
 variable "argocd_fs_group" {
   type        = number
   description = ""
@@ -123,12 +121,12 @@ variable "redis_run_as_user" {
 variable "dex_image" {
   type        = string
   description = ""
-  default     = "quay.io/dexidp/dex"
+  default     = "dexidp/dex"
 }
 variable "dex_version" {
   type        = string
   description = "The version of Dex to deploy."
-  default     = "v2.22.0"
+  default     = "2.25.0"
 }
 variable "dex_fs_group" {
   type        = number

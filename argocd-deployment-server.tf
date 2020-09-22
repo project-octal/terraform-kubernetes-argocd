@@ -48,7 +48,7 @@ resource "kubernetes_deployment" "argocd_server" {
         }
         container {
           name              = "argocd-server"
-          image             = "${var.image_repository}/${var.argocd_server_image}:${var.argocd_version}"
+          image             = "${var.image_repository}/${var.argocd_server_image}:v${var.argocd_version}"
           image_pull_policy = var.image_pull_policy
           command           = ["argocd-server", "--staticassets", "/shared/app", "--redis", "argocd-redis-ha-haproxy:6379"]
           env {
