@@ -1,6 +1,6 @@
 resource "kubernetes_service" "argocd_redis_ha_announce_0" {
   metadata {
-    name      = "argocd-redis-ha"
+    name      = "argocd-redis-ha-announce-0"
     namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-redis-ha"
@@ -12,6 +12,7 @@ resource "kubernetes_service" "argocd_redis_ha_announce_0" {
     }
   }
   spec {
+    type = "ClusterIP"
     port {
       name        = "server"
       protocol    = "TCP"
@@ -46,6 +47,7 @@ resource "kubernetes_service" "argocd_redis_ha_announce-1" {
     }
   }
   spec {
+    type = "ClusterIP"
     port {
       name        = "server"
       protocol    = "TCP"
@@ -80,6 +82,7 @@ resource "kubernetes_service" "argocd_redis_ha_announce-2" {
     }
   }
   spec {
+    type = "ClusterIP"
     port {
       name        = "server"
       protocol    = "TCP"
