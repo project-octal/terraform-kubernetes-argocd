@@ -2,22 +2,22 @@ resource "kubernetes_deployment" "argocd_repo_server" {
   metadata {
     name = "argocd-repo-server"
     labels = merge({
-      "app.kubernetes.io/name": "argocd-repo-server"
-      "app.kubernetes.io/component": "repo-server"
-      "app.kubernetes.io/part-of": "argocd"
+      "app.kubernetes.io/name" : "argocd-repo-server"
+      "app.kubernetes.io/component" : "repo-server"
+      "app.kubernetes.io/part-of" : "argocd"
     }, var.labels)
   }
   spec {
     replicas = 2
     selector {
       match_labels = {
-        "app.kubernetes.io/name": "argocd-repo-server"
+        "app.kubernetes.io/name" : "argocd-repo-server"
       }
     }
     template {
       metadata {
         labels = merge({
-          "app.kubernetes.io/name": "argocd-repo-server"
+          "app.kubernetes.io/name" : "argocd-repo-server"
         }, var.labels)
       }
       spec {
@@ -29,7 +29,7 @@ resource "kubernetes_deployment" "argocd_repo_server" {
                 topology_key = "failure-domain.beta.kubernetes.io/zone"
                 label_selector {
                   match_labels = {
-                    "app.kubernetes.io/name": "argocd-repo-server"
+                    "app.kubernetes.io/name" : "argocd-repo-server"
                   }
                 }
               }
@@ -38,7 +38,7 @@ resource "kubernetes_deployment" "argocd_repo_server" {
               topology_key = "kubernetes.io/hostname"
               label_selector {
                 match_labels = {
-                  "app.kubernetes.io/name": "argocd-repo-server"
+                  "app.kubernetes.io/name" : "argocd-repo-server"
                 }
               }
             }
@@ -46,10 +46,10 @@ resource "kubernetes_deployment" "argocd_repo_server" {
         }
         automount_service_account_token = false
         container {
-          name = "argocd-repo-server"
-          image = "${var.image_repository}/${var.argocd_repo_image}:${var.argocd_repo_version}"
+          name              = "argocd-repo-server"
+          image             = "${var.image_repository}/${var.argocd_repo_image}:${var.argocd_version}"
           image_pull_policy = var.image_pull_policy
-          command = ["uid_entrypoint.sh", "argocd-repo-server", "--redis", "argocd-redis-ha-haproxy:6379"]
+          command           = ["uid_entrypoint.sh", "argocd-repo-server", "--redis", "argocd-redis-ha-haproxy:6379"]
           # TODO: Add these!
           resources {}
           liveness_probe {}
@@ -58,7 +58,7 @@ resource "kubernetes_deployment" "argocd_repo_server" {
               port = 8081
             }
             initial_delay_seconds = 5
-            period_seconds = 10
+            period_seconds        = 10
           }
           port {
             container_port = 8081
@@ -67,19 +67,19 @@ resource "kubernetes_deployment" "argocd_repo_server" {
             container_port = 8084
           }
           volume_mount {
-            name = "ssh-known-hosts"
+            name       = "ssh-known-hosts"
             mount_path = "/app/config/ssh"
           }
           volume_mount {
-            name = "tls-certs"
+            name       = "tls-certs"
             mount_path = "/app/config/tls"
           }
           volume_mount {
-            name = "gpg-keys"
+            name       = "gpg-keys"
             mount_path = "/app/config/gpg/source"
           }
           volume_mount {
-            name = "gpg-keyring"
+            name       = "gpg-keyring"
             mount_path = "/app/config/gpg/keys"
           }
         }

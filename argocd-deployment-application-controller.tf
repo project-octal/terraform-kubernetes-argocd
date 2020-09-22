@@ -2,15 +2,15 @@ resource "kubernetes_deployment" "argocd_application_controller" {
   metadata {
     name = "argocd-application-controller"
     labels = merge({
-      "app.kubernetes.io/name": "argocd-application-controller"
-      "app.kubernetes.io/component": "application-controller"
-      "app.kubernetes.io/part-of": "argocd"
+      "app.kubernetes.io/name" : "argocd-application-controller"
+      "app.kubernetes.io/component" : "application-controller"
+      "app.kubernetes.io/part-of" : "argocd"
     }, var.labels)
   }
   spec {
     selector {
       match_labels = {
-        "app.kubernetes.io/name": "argocd-application-controller"
+        "app.kubernetes.io/name" : "argocd-application-controller"
       }
     }
     strategy {
@@ -19,7 +19,7 @@ resource "kubernetes_deployment" "argocd_application_controller" {
     template {
       metadata {
         labels = merge({
-          "app.kubernetes.io/name": "argocd-application-controller"
+          "app.kubernetes.io/name" : "argocd-application-controller"
         }, var.labels)
       }
       spec {
@@ -27,8 +27,8 @@ resource "kubernetes_deployment" "argocd_application_controller" {
         # TODO: Add this!
         security_context {}
         container {
-          name = "argocd-application-controller"
-          image = "${var.image_repository}/${var.argocd_image}:${var.argocd_version}"
+          name              = "argocd-application-controller"
+          image             = "${var.image_repository}/${var.argocd_repo_image}:${var.argocd_version}"
           image_pull_policy = var.image_pull_policy
           # TODO: Resource requirements will need to be declared
           resources {}
@@ -38,7 +38,7 @@ resource "kubernetes_deployment" "argocd_application_controller" {
               port = 8082
             }
             initial_delay_seconds = 5
-            period_seconds = 10
+            period_seconds        = 10
           }
           readiness_probe {
             http_get {
@@ -46,7 +46,7 @@ resource "kubernetes_deployment" "argocd_application_controller" {
               port = 8082
             }
             initial_delay_seconds = 5
-            period_seconds = 10
+            period_seconds        = 10
           }
           port {
             container_port = 8082

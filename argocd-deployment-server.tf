@@ -2,22 +2,22 @@ resource "kubernetes_deployment" "argocd_server" {
   metadata {
     name = "argocd-server"
     labels = merge({
-      "app.kubernetes.io/name": "argocd-server"
-      "app.kubernetes.io/component": "server"
-      "app.kubernetes.io/part-of": "argocd"
+      "app.kubernetes.io/name" : "argocd-server"
+      "app.kubernetes.io/component" : "server"
+      "app.kubernetes.io/part-of" : "argocd"
     }, var.labels)
   }
   spec {
     replicas = 2
     selector {
       match_labels = {
-        "app.kubernetes.io/name": "argocd-server"
+        "app.kubernetes.io/name" : "argocd-server"
       }
     }
     template {
       metadata {
         labels = merge({
-          "app.kubernetes.io/name": "argocd-server"
+          "app.kubernetes.io/name" : "argocd-server"
         }, var.labels)
       }
       spec {
@@ -30,7 +30,7 @@ resource "kubernetes_deployment" "argocd_server" {
                 topology_key = "failure-domain.beta.kubernetes.io/zone"
                 label_selector {
                   match_labels = {
-                    "app.kubernetes.io/name": "argocd-server"
+                    "app.kubernetes.io/name" : "argocd-server"
                   }
                 }
               }
@@ -39,19 +39,19 @@ resource "kubernetes_deployment" "argocd_server" {
               topology_key = "kubernetes.io/hostname"
               label_selector {
                 match_labels = {
-                  "app.kubernetes.io/name": "argocd-server"
+                  "app.kubernetes.io/name" : "argocd-server"
                 }
               }
             }
           }
         }
         container {
-          name = "argocd-server"
-          image = "${var.image_repository}/${var.argocd_server_image}:${var.argocd_server_version}"
+          name              = "argocd-server"
+          image             = "${var.image_repository}/${var.argocd_server_image}:${var.argocd_version}"
           image_pull_policy = var.image_pull_policy
-          command = ["argocd-server", "--staticassets", "/shared/app", "--redis", "argocd-redis-ha-haproxy:6379"]
+          command           = ["argocd-server", "--staticassets", "/shared/app", "--redis", "argocd-redis-ha-haproxy:6379"]
           env {
-            name = "ARGOCD_API_SERVER_REPLICAS"
+            name  = "ARGOCD_API_SERVER_REPLICAS"
             value = "2"
           }
           port {
@@ -69,14 +69,14 @@ resource "kubernetes_deployment" "argocd_server" {
               port = 8080
             }
             initial_delay_seconds = 3
-            period_seconds = 30
+            period_seconds        = 30
           }
           volume_mount {
-            name = "ssh-known-hosts"
+            name       = "ssh-known-hosts"
             mount_path = "/app/config/ssh"
           }
           volume_mount {
-            name = "tls-certs"
+            name       = "tls-certs"
             mount_path = "/app/config/tls"
           }
         }
