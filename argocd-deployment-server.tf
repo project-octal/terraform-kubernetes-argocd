@@ -23,6 +23,7 @@ resource "kubernetes_deployment" "argocd_server" {
       }
       spec {
         service_account_name = kubernetes_service_account.argocd_server.metadata.0.name
+        automount_service_account_token = true
         affinity {
           pod_anti_affinity {
             preferred_during_scheduling_ignored_during_execution {

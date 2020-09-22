@@ -14,7 +14,9 @@ resource "kubernetes_deployment" "dex_server" {
         "app.kubernetes.io/name" : "argocd-dex-server"
       }
     }
+
     template {
+
       metadata {
         labels = merge({
           "app.kubernetes.io/name" : "argocd-dex-server"
@@ -22,8 +24,9 @@ resource "kubernetes_deployment" "dex_server" {
       }
       spec {
         service_account_name = kubernetes_service_account.dex_server.metadata.0.name
+        automount_service_account_token = true
         # TODO: Add this!
-        security_context {}
+        # security_context {}
         container {
           name              = "dex"
           image             = "${var.image_repository}/${var.dex_image}:v${var.dex_version}"

@@ -25,6 +25,7 @@ resource "kubernetes_deployment" "argocd_application_controller" {
       }
       spec {
         service_account_name = kubernetes_service_account.argocd_application_controller.metadata.0.name
+        automount_service_account_token = true
         # TODO: Add this!
         # security_context {}
         container {

@@ -31,6 +31,7 @@ resource "kubernetes_deployment" "argocd_redis_ha_haproxy" {
       }
       spec {
         service_account_name = kubernetes_service_account.argocd_redis_ha_haproxy.metadata.0.name
+        automount_service_account_token = true
         security_context {
           run_as_non_root = var.haproxy_run_as_non_root
           fs_group        = var.haproxy_fs_group
