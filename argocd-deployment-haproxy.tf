@@ -1,7 +1,7 @@
 resource "kubernetes_deployment" "argocd_redis_ha_haproxy" {
   metadata {
     name      = "argocd-redis-ha-haproxy"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.name
+    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
     labels = {
       "app.kubernetes.io/component" : "redis"
       "app.kubernetes.io/name" : "argocd-redis-ha-haproxy"

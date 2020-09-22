@@ -1,7 +1,7 @@
 resource "kubernetes_stateful_set" "argocd_redis_ha" {
   metadata {
     name      = "argocd-redis-ha"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.name
+    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-redis-ha"
       "app.kubernetes.io/component" : "redis"

@@ -1,7 +1,7 @@
 resource "kubernetes_deployment" "argocd_dex_server" {
   metadata {
     name      = "argocd-dex-server"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.name
+    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-dex-server"
       "app.kubernetes.io/component" : "dex-server"

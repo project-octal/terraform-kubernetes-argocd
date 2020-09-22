@@ -1,7 +1,7 @@
 resource "kubernetes_service" "argocd_redis_ha_announce_0" {
   metadata {
     name      = "argocd-redis-ha"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.name
+    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-redis-ha"
       "app.kubernetes.io/component" : "redis"
@@ -35,7 +35,7 @@ resource "kubernetes_service" "argocd_redis_ha_announce_0" {
 resource "kubernetes_service" "argocd_redis_ha_announce-1" {
   metadata {
     name      = "argocd-redis-ha-announce-1"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.name
+    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-redis-ha"
       "app.kubernetes.io/component" : "redis"
@@ -69,7 +69,7 @@ resource "kubernetes_service" "argocd_redis_ha_announce-1" {
 resource "kubernetes_service" "argocd_redis_ha_announce-2" {
   metadata {
     name      = "argocd-redis-ha-announce-2"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.name
+    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-redis-ha"
       "app.kubernetes.io/component" : "redis"
@@ -103,7 +103,7 @@ resource "kubernetes_service" "argocd_redis_ha_announce-2" {
 resource "kubernetes_service" "argocd_redis_ha_haproxy" {
   metadata {
     name      = "argocd-redis-ha-haproxy"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.name
+    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-redis-ha-haproxy"
       "app.kubernetes.io/component" : "redis"
@@ -127,7 +127,7 @@ resource "kubernetes_service" "argocd_redis_ha_haproxy" {
 resource "kubernetes_service" "argocd_redis_ha" {
   metadata {
     name      = "argocd-redis-ha"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.name
+    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-redis-ha"
       "app.kubernetes.io/component" : "redis"
@@ -158,7 +158,7 @@ resource "kubernetes_service" "argocd_redis_ha" {
 resource "kubernetes_service" "argocd_dex_server" {
   metadata {
     name      = "argocd-dex-server"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.name
+    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-dex-server"
       "app.kubernetes.io/component" : "dex-server"
@@ -193,7 +193,7 @@ resource "kubernetes_service" "argocd_dex_server" {
 resource "kubernetes_service" "argocd_metrics" {
   metadata {
     name      = "argocd-metrics"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.name
+    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-metrics"
       "app.kubernetes.io/component" : "metrics"
@@ -216,7 +216,7 @@ resource "kubernetes_service" "argocd_metrics" {
 resource "kubernetes_service" "argocd_repo_server" {
   metadata {
     name      = "argocd-repo-server"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.name
+    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-repo-server"
       "app.kubernetes.io/component" : "repo-server"
@@ -245,7 +245,7 @@ resource "kubernetes_service" "argocd_repo_server" {
 resource "kubernetes_service" "argocd_server_metrics" {
   metadata {
     name      = "argocd-server-metrics"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.name
+    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-server-metrics"
       "app.kubernetes.io/component" : "server"
@@ -268,7 +268,7 @@ resource "kubernetes_service" "argocd_server_metrics" {
 resource "kubernetes_service" "argocd_server" {
   metadata {
     name      = "argocd-server"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.name
+    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
     labels = merge({
       "app.kubernetes.io/name" : "argocd-server"
       "app.kubernetes.io/component" : "server"
