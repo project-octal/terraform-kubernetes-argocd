@@ -11,10 +11,11 @@ resource "kubernetes_role_binding" "dex_server" {
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "Role"
-    name      = "argocd-dex-server"
+    name      = kubernetes_role.dex_server.metadata.0.name
   }
   subject {
     kind = "ServiceAccount"
-    name = "argocd-dex-server"
+    name = kubernetes_service_account.dex_server.metadata.0.name
+    namespace = var.namespace
   }
 }

@@ -11,17 +11,14 @@ resource "kubernetes_role_binding" "argocd_redis_ha" {
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "Role"
-    name      = "argocd-redis-ha"
+    name      = kubernetes_service_account.argocd_redis_ha.metadata.0.name
   }
   subject {
     kind = "ServiceAccount"
-    name = "argocd-redis-ha"
+    name = kubernetes_service_account.argocd_redis_ha.metadata.0.name
+    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
   }
 }
-
-
-
-
 
 resource "kubernetes_role_binding" "argocd_server" {
   metadata {
@@ -36,10 +33,11 @@ resource "kubernetes_role_binding" "argocd_server" {
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "Role"
-    name      = "argocd-server"
+    name      = kubernetes_role.argocd_server.metadata.0.name
   }
   subject {
     kind = "ServiceAccount"
-    name = "argocd-server"
+    name = kubernetes_service_account.argocd_server.metadata.0.name
+    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
   }
 }
