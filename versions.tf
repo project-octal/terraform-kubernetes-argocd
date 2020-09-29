@@ -8,8 +8,5 @@ terraform {
       version = ">= 0.8.0"
       source  = "banzaicloud/k8s"
     }
-    argocd = {
-      source = "oboukili/argocd"
-    }
   }
 }
