@@ -11,6 +11,11 @@ variable "namespace" {
   description = "The namespace this ArgoCD deployment will reside in."
   default     = "argocd"
 }
+variable "namespace_annotations" {
+  type = map(string)
+  description = "Additional ArgoCD namespace annotations (e.g. for `linkerd.io/inject: enabled` for mesh things)"
+  default = {}
+}
 variable "image_repository" {
   type        = string
   description = "The image repository to use when pulling images."
