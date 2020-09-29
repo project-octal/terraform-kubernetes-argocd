@@ -63,7 +63,7 @@ variable "argocd_git_repositories" {
   default = []
 }
 variable "argocd_repositories" {
-  type = list(string)
+  type = list(map(any))
   description = "A list of repositories that ArgoCD might pull from."
   default = []
 }
