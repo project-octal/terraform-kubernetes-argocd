@@ -1,6 +1,7 @@
 data "kubernetes_secret" "argocd_default_secret" {
   metadata {
     name = kubernetes_service_account.argocd_server.default_secret_name
+    namespace = kubernetes_service.argocd_server.metadata.0.namespace
   }
 }
 provider "argocd" {
