@@ -51,3 +51,14 @@ variable "labels" {
   description = "Extra Kubernetes labels to include with the resources created by this module"
   default     = {}
 }
+
+variable "repository_credentials" {
+  type = list(map(any))
+  description = "A list of git repositories that ArgoCD will be configured to use."
+  default = []
+}
+variable "argocd_git_repositories" {
+  type = list(map(any))
+  description = "A list of credentials that ArgoCD will use when pulling from configured repositories."
+  default = []
+}

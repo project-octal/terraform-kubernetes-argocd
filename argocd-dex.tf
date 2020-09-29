@@ -1,7 +1,7 @@
 module "argocd_dex" {
   source = "./argocd-dex"
 
-  namespace           = var.namespace
+  namespace           = kubernetes_namespace.argocd_namespace.metadata.0.name
   dex_version         = var.dex_version
   dex_image           = var.dex_image
   image_repository    = var.image_repository
