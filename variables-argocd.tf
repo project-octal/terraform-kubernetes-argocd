@@ -4,7 +4,7 @@
 variable "argocd_version" {
   type        = string
   description = "The version of ArgoCD to deploy."
-  default     = "1.7.6"
+  default     = "1.7.7"
 }
 variable "namespace" {
   type        = string
