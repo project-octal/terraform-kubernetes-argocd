@@ -26,6 +26,10 @@ resource "kubernetes_config_map" "argocd_cm" {
       "app.kubernetes.io/part-of" : "argocd"
     }, var.labels)
   }
+  data = yamlencode({
+    repositories = yamlencode(var.argocd_repositories),
+    repository.credentials = yamlencode(var.argocd_repository_credentials)
+  })
 }
 
 resource "kubernetes_config_map" "argocd_gpg_keys_cm" {

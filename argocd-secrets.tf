@@ -8,4 +8,9 @@ resource "kubernetes_secret" "argocd_secret" {
     }, var.labels)
   }
   type = "Opaque"
+  lifecycle {
+    ignore_changes = [
+      data
+    ]
+  }
 }

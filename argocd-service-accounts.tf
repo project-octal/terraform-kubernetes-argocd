@@ -22,10 +22,6 @@ resource "kubernetes_service_account" "argocd_redis_ha" {
   }
 }
 
-
-
-
-
 resource "kubernetes_service_account" "argocd_server" {
   metadata {
     name      = "argocd-server"

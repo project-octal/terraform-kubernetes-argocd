@@ -62,3 +62,13 @@ variable "argocd_git_repositories" {
   description = "A list of credentials that ArgoCD will use when pulling from configured repositories."
   default = []
 }
+variable "argocd_repositories" {
+  type = list(string)
+  description = "A list of repositories that ArgoCD might pull from."
+  default = []
+}
+variable "argocd_repository_credentials" {
+  type = list(map(any))
+  description = "A list of repositories that ArgoCD might pull from."
+  default = []
+}
