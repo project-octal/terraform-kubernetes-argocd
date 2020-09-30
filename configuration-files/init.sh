@@ -97,3 +97,6 @@ if [ "$${AUTH:-}" ]; then
 fi
 
     echo "Ready..."
+
+    echo "Sentinel Config"
+    cat $SENTINEL_CONF
