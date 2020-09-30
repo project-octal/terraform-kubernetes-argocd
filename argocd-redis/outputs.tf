@@ -1,8 +1,8 @@
 
 output "redis_address" {
-  value = ""
+  value = module.argocd_haproxy_ha.address
 }
 
 output "redis_port" {
-  value = ""
+  value = module.argocd_haproxy_ha.port
 }
