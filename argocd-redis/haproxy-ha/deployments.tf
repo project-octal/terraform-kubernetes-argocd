@@ -141,7 +141,7 @@ resource "kubernetes_deployment" "haproxy_deployment" {
         volume {
           name = "service-token"
           secret {
-            secret_name = kubernetes_service_account.haproxy_service_account.secret
+            secret_name = kubernetes_service_account.haproxy_service_account.default_secret_name
           }
         }
         volume {

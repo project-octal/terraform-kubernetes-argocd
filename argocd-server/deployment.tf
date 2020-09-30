@@ -103,7 +103,7 @@ resource "kubernetes_deployment" "server_deployment" {
         volume {
           name = "service-token"
           secret {
-            secret_name = kubernetes_service_account.server_service_account.secret
+            secret_name = kubernetes_service_account.server_service_account.default_secret_name
           }
         }
         volume {
