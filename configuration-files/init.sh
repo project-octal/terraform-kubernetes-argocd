@@ -23,6 +23,7 @@ sentinel_update() {
 
 redis_update() {
     echo "Updating redis config"
+    echo " " >> $REDIS_CONF
     echo "slaveof $1 $REDIS_PORT" >> "$REDIS_CONF"
     echo "slave-announce-ip $ANNOUNCE_IP" >> $REDIS_CONF
     echo "slave-announce-port $REDIS_PORT" >> $REDIS_CONF
