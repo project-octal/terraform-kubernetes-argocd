@@ -30,7 +30,7 @@ resource "kubernetes_deployment" "argocd_application_controller" {
         # security_context {}
         container {
           name              = "argocd-application-controller"
-          image             = "${var.image_repository}/${var.argocd_image}:v${var.argocd_version}"
+          image             = "${var.image_repository}/${var.argocd_image}:${var.argocd_version}"
           image_pull_policy = var.image_pull_policy
           command = [
             "argocd-application-controller",
