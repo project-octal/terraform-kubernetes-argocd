@@ -9,6 +9,7 @@ SENTINEL_CONF=/data/conf/sentinel.conf
 SENTINEL_PORT=26379
 SERVICE=argocd-redis-ha
 set -eu
+set -x
 
 sentinel_update() {
     echo "Updating sentinel config with master $MASTER"
