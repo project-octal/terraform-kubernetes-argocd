@@ -1,25 +1,23 @@
 resource "kubernetes_deployment" "argocd_repo_server" {
   metadata {
-    name      = "argocd-repo-server"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
+    name      = var.name
+    namespace = var.namespace
     labels = merge({
-      "app.kubernetes.io/name" : "argocd-repo-server"
-      "app.kubernetes.io/component" : "repo-server"
-      "app.kubernetes.io/part-of" : "argocd"
-    }, var.labels)
+      "app.kubernetes.io/name" : var.name
+    }, local.labels)
   }
   spec {
-    replicas = 2
+    replicas = var.replicas
     selector {
       match_labels = {
-        "app.kubernetes.io/name" : "argocd-repo-server"
+        "app.kubernetes.io/name" : var.name
       }
     }
     template {
       metadata {
         labels = merge({
-          "app.kubernetes.io/name" : "argocd-repo-server"
-        }, var.labels)
+          "app.kubernetes.io/name" : var.name
+        }, local.labels)
       }
       spec {
         affinity {
@@ -27,10 +25,10 @@ resource "kubernetes_deployment" "argocd_repo_server" {
             preferred_during_scheduling_ignored_during_execution {
               weight = 100
               pod_affinity_term {
-                topology_key = "failure-domain.beta.kubernetes.io/zone"
+                topology_key = var.pod_affinity_topology_key
                 label_selector {
                   match_labels = {
-                    "app.kubernetes.io/name" : "argocd-repo-server"
+                    "app.kubernetes.io/name" : var.name
                   }
                 }
               }
@@ -39,7 +37,7 @@ resource "kubernetes_deployment" "argocd_repo_server" {
               topology_key = "kubernetes.io/hostname"
               label_selector {
                 match_labels = {
-                  "app.kubernetes.io/name" : "argocd-repo-server"
+                  "app.kubernetes.io/name" : var.name
                 }
               }
             }
@@ -47,13 +45,27 @@ resource "kubernetes_deployment" "argocd_repo_server" {
         }
         automount_service_account_token = false
         container {
-          name              = "argocd-repo-server"
-          image             = "${var.image_repository}/${var.argocd_repo_image}:v${var.argocd_version}"
+          name              = var.name
+          image             = "${var.image_repository}/${var.image_name}:${var.image_tag}"
           image_pull_policy = var.image_pull_policy
-          command           = ["uid_entrypoint.sh", "argocd-repo-server", "--redis", "argocd-redis-ha-haproxy:6379"]
-          # TODO: Add these!
-          # resources {}
-          # liveness_probe {}
+          command           = ["uid_entrypoint.sh", "argocd-repo-server", "--redis", "${var.redis_address}:${var.redis_port}"]
+          resources {
+            requests {
+              cpu    = var.cpu_request
+              memory = var.memory_request
+            }
+            limits {
+              cpu    = var.cpu_limit
+              memory = var.memory_limit
+            }
+          }
+          liveness_probe {
+            tcp_socket {
+              port = 8081
+            }
+            initial_delay_seconds = 5
+            period_seconds        = 5
+          }
           readiness_probe {
             tcp_socket {
               port = 8081

@@ -1,45 +1,43 @@
 resource "kubernetes_stateful_set" "argocd_redis_ha" {
   metadata {
-    name      = "argocd-redis-ha"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
+    name      = var.name
+    namespace = var.namespace
     labels = merge({
-      "app.kubernetes.io/name" : "argocd-redis-ha"
-      "app.kubernetes.io/component" : "redis"
-      "app.kubernetes.io/part-of" : "argocd"
-    }, var.labels)
+      "app.kubernetes.io/name" : var.name
+    }, local.labels)
   }
   spec {
     pod_management_policy = "OrderedReady"
     update_strategy {
       type = "RollingUpdate"
     }
-    replicas     = 3
-    service_name = "argocd-redis-ha"
+    replicas     = var.replicas
+    service_name = var.name
     selector {
       match_labels = {
-        "app.kubernetes.io/name" : "argocd-redis-ha"
+        "app.kubernetes.io/name" : var.name
       }
     }
     template {
       metadata {
         labels = merge({
-          "app.kubernetes.io/name" : "argocd-redis-ha"
+          "app.kubernetes.io/name" : var.name
         }, var.labels)
         annotations = {
-          "checksum/init-config" : "552ee3bec8fe5d9d865e371f7b615c6d472253649eb65d53ed4ae874f782647c"
+          "checksum/init-config" : var.checksum-init-config
         }
       }
       spec {
-        service_account_name = kubernetes_service_account.argocd_redis_ha.metadata.0.name
+        service_account_name = kubernetes_service_account.redis_ha_service_account.metadata.0.name
         affinity {
           pod_anti_affinity {
             preferred_during_scheduling_ignored_during_execution {
               weight = 100
               pod_affinity_term {
-                topology_key = "failure-domain.beta.kubernetes.io/zone"
+                topology_key = var.pod_affinity_topology_key
                 label_selector {
                   match_labels = {
-                    "app.kubernetes.io/name" : "argocd-redis-ha"
+                    "app.kubernetes.io/name" : var.name
                   }
                 }
               }
@@ -48,21 +46,21 @@ resource "kubernetes_stateful_set" "argocd_redis_ha" {
               topology_key = "kubernetes.io/hostname"
               label_selector {
                 match_labels = {
-                  "app.kubernetes.io/name" : "argocd-redis-ha"
+                  "app.kubernetes.io/name" : var.name
                 }
               }
             }
           }
         }
         security_context {
-          run_as_non_root = var.redis_run_as_non_root
-          fs_group        = var.redis_fs_group
-          run_as_user     = var.redis_run_as_user
+          run_as_non_root = true
+          fs_group        = 1000
+          run_as_user     = 1000
         }
 
         init_container {
           name              = "config-init"
-          image             = "${var.image_repository}/${var.redis_image}:${var.redis_version}"
+          image             = "${var.image_repository}/${var.image_name}:${var.image_tag}"
           image_pull_policy = var.image_pull_policy
           command           = ["sh"]
           args              = ["/readonly-config/init.sh"]
@@ -78,8 +76,16 @@ resource "kubernetes_stateful_set" "argocd_redis_ha" {
             name  = "SENTINEL_ID_2"
             value = "3acbca861108bc47379b71b1d87d1c137dce591f"
           }
-          # TODO: Add these!
-          resources {}
+          resources {
+            requests {
+              cpu    = var.cpu_request
+              memory = var.memory_request
+            }
+            limits {
+              cpu    = var.cpu_limit
+              memory = var.memory_limit
+            }
+          }
           volume_mount {
             name       = "config"
             mount_path = "/readonly-config"
@@ -93,19 +99,34 @@ resource "kubernetes_stateful_set" "argocd_redis_ha" {
 
         container {
           name              = "redis"
-          image             = "${var.image_repository}/${var.redis_image}:${var.redis_version}"
+          image             = "${var.image_repository}/${var.image_name}:${var.image_tag}"
           image_pull_policy = var.image_pull_policy
           command           = ["redis-server"]
           args              = ["/data/conf/redis.conf"]
-          # TODO: Add these!
-          resources {}
+          resources {
+            requests {
+              cpu    = var.cpu_request
+              memory = var.memory_request
+            }
+            limits {
+              cpu    = var.cpu_limit
+              memory = var.memory_limit
+            }
+          }
           liveness_probe {
-            initial_delay_seconds = 15
             tcp_socket {
               port = 6379
             }
+            initial_delay_seconds = 15
+            period_seconds        = 5
           }
-          readiness_probe {}
+          readiness_probe {
+            tcp_socket {
+              port = 6379
+            }
+            initial_delay_seconds = 15
+            period_seconds        = 5
+          }
           port {
             name           = "redis"
             container_port = 6379
@@ -118,17 +139,32 @@ resource "kubernetes_stateful_set" "argocd_redis_ha" {
 
         container {
           name              = "sentinel"
-          image             = "${var.image_repository}/${var.redis_image}:${var.redis_version}"
+          image             = "${var.image_repository}/${var.image_name}:${var.image_tag}"
           image_pull_policy = var.image_pull_policy
           command           = ["redis-sentinel"]
           args              = ["/data/conf/sentinel.conf"]
-          # TODO: Add these!
-          resources {}
-          liveness_probe {
-            initial_delay_seconds = 15
+          resources {
+            requests {
+              cpu    = var.cpu_request
+              memory = var.memory_request
+            }
+            limits {
+              cpu    = var.cpu_limit
+              memory = var.memory_limit
+            }
+          }
+          readiness_probe {
             tcp_socket {
               port = 26379
             }
+            initial_delay_seconds = 15
+            period_seconds        = 5
+          }
+          liveness_probe {
+            tcp_socket {
+              port = 26379
+            }
+            initial_delay_seconds = 15
           }
           port {
             name           = "sentinel"

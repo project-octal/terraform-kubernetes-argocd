@@ -39,15 +39,3 @@ variable "dex_version" {
   type        = string
   description = "The version of the Dex Docker image to deploy."
 }
-variable "dex_fs_group" {
-  type        = number
-  description = ""
-}
-variable "dex_run_as_non_root" {
-  type        = bool
-  description = ""
-}
-variable "dex_run_as_user" {
-  type        = number
-  description = ""
-}

@@ -14,8 +14,8 @@ resource "kubernetes_role_binding" "dex_server" {
     name      = kubernetes_role.dex_server.metadata.0.name
   }
   subject {
-    kind = "ServiceAccount"
-    name = kubernetes_service_account.dex_server.metadata.0.name
+    kind      = "ServiceAccount"
+    name      = kubernetes_service_account.dex_server.metadata.0.name
     namespace = var.namespace
   }
 }

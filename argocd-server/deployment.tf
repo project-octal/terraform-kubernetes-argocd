@@ -1,38 +1,36 @@
-resource "kubernetes_deployment" "argocd_server" {
+resource "kubernetes_deployment" "server_deployment" {
   metadata {
-    name      = "argocd-server"
-    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
+    name      = var.name
+    namespace = var.namespace
     labels = merge({
-      "app.kubernetes.io/name" : "argocd-server"
-      "app.kubernetes.io/component" : "server"
-      "app.kubernetes.io/part-of" : "argocd"
-    }, var.labels)
+      "app.kubernetes.io/name" : var.name
+    }, local.labels)
   }
   spec {
-    replicas = 2
+    replicas = var.replicas
     selector {
       match_labels = {
-        "app.kubernetes.io/name" : "argocd-server"
+        "app.kubernetes.io/name" : var.name
       }
     }
     template {
       metadata {
         labels = merge({
-          "app.kubernetes.io/name" : "argocd-server"
+          "app.kubernetes.io/name" : var.name
         }, var.labels)
       }
       spec {
-        service_account_name = kubernetes_service_account.argocd_server.metadata.0.name
-        automount_service_account_token = true
+        service_account_name            = kubernetes_service_account.server_service_account.metadata.0.name
+        automount_service_account_token = false
         affinity {
           pod_anti_affinity {
             preferred_during_scheduling_ignored_during_execution {
               weight = 100
               pod_affinity_term {
-                topology_key = "failure-domain.beta.kubernetes.io/zone"
+                topology_key = var.pod_affinity_topology_key
                 label_selector {
                   match_labels = {
-                    "app.kubernetes.io/name" : "argocd-server"
+                    "app.kubernetes.io/name" : var.name
                   }
                 }
               }
@@ -41,20 +39,20 @@ resource "kubernetes_deployment" "argocd_server" {
               topology_key = "kubernetes.io/hostname"
               label_selector {
                 match_labels = {
-                  "app.kubernetes.io/name" : "argocd-server"
+                  "app.kubernetes.io/name" : var.name
                 }
               }
             }
           }
         }
         container {
-          name              = "argocd-server"
-          image             = "${var.image_repository}/${var.argocd_server_image}:v${var.argocd_version}"
+          name              = var.name
+          image             = "${var.image_repository}/${var.image_name}:${var.image_tag}"
           image_pull_policy = var.image_pull_policy
-          command           = ["argocd-server", "--staticassets", "/shared/app", "--redis", "argocd-redis-ha-haproxy:6379"]
+          command           = ["argocd-server", "--staticassets", "/shared/app", "--redis", "${var.redis_address}:${var.redis_port}"]
           env {
             name  = "ARGOCD_API_SERVER_REPLICAS"
-            value = "2"
+            value = tostring(var.replicas)
           }
           port {
             container_port = 8080
@@ -62,9 +60,24 @@ resource "kubernetes_deployment" "argocd_server" {
           port {
             container_port = 8083
           }
-          # TODO: Add these!
-          # resources {}
-          # liveness_probe {}
+          resources {
+            requests {
+              cpu    = var.cpu_request
+              memory = var.memory_request
+            }
+            limits {
+              cpu    = var.cpu_limit
+              memory = var.memory_limit
+            }
+          }
+          liveness_probe {
+            http_get {
+              path = "/healthz"
+              port = 8080
+            }
+            initial_delay_seconds = 5
+            period_seconds        = 5
+          }
           readiness_probe {
             http_get {
               path = "/healthz"
@@ -74,12 +87,23 @@ resource "kubernetes_deployment" "argocd_server" {
             period_seconds        = 30
           }
           volume_mount {
+            name       = "service-token"
+            mount_path = "/var/run/secrets/kubernetes.io/serviceaccount/"
+            read_only  = true
+          }
+          volume_mount {
             name       = "ssh-known-hosts"
             mount_path = "/app/config/ssh"
           }
           volume_mount {
             name       = "tls-certs"
             mount_path = "/app/config/tls"
+          }
+        }
+        volume {
+          name = "service-token"
+          secret {
+            secret_name = kubernetes_service_account.server_service_account.secret
           }
         }
         volume {

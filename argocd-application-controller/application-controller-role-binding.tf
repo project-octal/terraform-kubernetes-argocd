@@ -14,8 +14,8 @@ resource "kubernetes_role_binding" "argocd_application_controller" {
     name      = kubernetes_role.argocd_application_controller.metadata.0.name
   }
   subject {
-    kind = "ServiceAccount"
-    name = kubernetes_service_account.argocd_application_controller.metadata.0.name
+    kind      = "ServiceAccount"
+    name      = kubernetes_service_account.argocd_application_controller.metadata.0.name
     namespace = var.namespace
   }
 }

@@ -1,13 +1,9 @@
-
-
 resource "kubernetes_cluster_role" "argocd_server" {
   metadata {
-    name = "argocd-server"
+    name = var.name
     labels = merge({
-      "app.kubernetes.io/name" : "argocd-server"
-      "app.kubernetes.io/component" : "server"
-      "app.kubernetes.io/part-of" : "argocd"
-    }, var.labels)
+      "app.kubernetes.io/name" : var.name
+    }, local.labels)
   }
   rule {
     api_groups = ["*"]

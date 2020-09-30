@@ -23,7 +23,7 @@ resource "kubernetes_deployment" "dex_server" {
         }, var.labels)
       }
       spec {
-        service_account_name = kubernetes_service_account.dex_server.metadata.0.name
+        service_account_name            = kubernetes_service_account.dex_server.metadata.0.name
         automount_service_account_token = true
         # TODO: Add this!
         # security_context {}
@@ -31,7 +31,7 @@ resource "kubernetes_deployment" "dex_server" {
           name              = "dex"
           image             = "${var.image_repository}/${var.dex_image}:v${var.dex_version}"
           image_pull_policy = var.image_pull_policy
-          command           = [
+          command = [
             "/shared/argocd-util",
             "rundex"
           ]
@@ -57,7 +57,7 @@ resource "kubernetes_deployment" "dex_server" {
           name              = "copyutil"
           image             = "${var.image_repository}/${var.argocd_server_image}:v${var.argocd_version}"
           image_pull_policy = var.image_pull_policy
-          command           = [
+          command = [
             "cp",
             "-n",
             "/usr/local/bin/argocd-util",
