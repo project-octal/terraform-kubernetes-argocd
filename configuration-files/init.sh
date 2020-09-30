@@ -16,8 +16,8 @@ sentinel_update() {
     eval MY_SENTINEL_ID="\$${SENTINEL_ID_$INDEX}"
     sed -i "1s/^/sentinel myid $MY_SENTINEL_ID\\n/" "$SENTINEL_CONF"
     sed -i "2s/^/sentinel monitor $MASTER_GROUP $1 $REDIS_PORT $QUORUM \\n/" "$SENTINEL_CONF"
-    echo "sentinel announce-ip $ANNOUNCE_IP" >> $SENTINEL_CONF
-    echo "sentinel announce-port $SENTINEL_PORT" >> $SENTINEL_CONF
+    echo "\nsentinel announce-ip $ANNOUNCE_IP" >> $SENTINEL_CONF
+    echo "\nsentinel announce-port $SENTINEL_PORT" >> $SENTINEL_CONF
 }
 
 redis_update() {
