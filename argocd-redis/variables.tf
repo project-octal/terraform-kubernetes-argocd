@@ -4,18 +4,20 @@ variable "labels" {
 variable "namespace" {
   type = string
 }
-variable "name" {
-  type    = string
-  default = "argocd-redis-ha"
+variable "enable_ha_redis" {
+  type    = bool
+  default = true
 }
-variable "component" {
-  type    = string
-  default = "redis"
-}
-variable "image_tag" {
+variable "haproxy_image_tag" {
   type = string
 }
-variable "image_name" {
+variable "haproxy_image_name" {
+  type = string
+}
+variable "redis_image_tag" {
+  type = string
+}
+variable "redis_image_name" {
   type = string
 }
 variable "image_repository" {

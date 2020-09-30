@@ -2,12 +2,14 @@
 module "argocd_redis" {
   source = "./argocd-redis"
 
-  namespace         = kubernetes_namespace.argocd_namespace.metadata.0.name
-  image_tag         = var.argocd_image_tag
-  image_name        = var.argocd_image_name
-  image_repository  = var.image_repository
-  image_pull_policy = var.image_pull_policy
-  labels            = local.labels
+  namespace          = kubernetes_namespace.argocd_namespace.metadata.0.name
+  haproxy_image_name = var.haproxy_image_name
+  haproxy_image_tag  = var.haproxy_image_tag
+  redis_image_name   = var.redis_image_name
+  redis_image_tag    = var.redis_image_tag
+  image_repository   = var.image_repository
+  image_pull_policy  = var.image_pull_policy
+  labels             = local.labels
 }
 
 module "argocd_repo_server" {
@@ -51,8 +53,8 @@ module "argocd_dex" {
   source = "./argocd-dex"
 
   namespace         = kubernetes_namespace.argocd_namespace.metadata.0.name
-  dex_version       = var.dex_version
-  dex_image         = var.dex_image
+  dex_version       = var.dex_image_tag
+  dex_image         = var.dex_image_name
   image_repository  = var.image_repository
   image_pull_policy = var.image_pull_policy
   labels            = local.labels

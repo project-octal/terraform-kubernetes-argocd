@@ -17,7 +17,8 @@ variable "component" {
   default = "redis"
 }
 variable "replicas" {
-  type = number
+  type    = number
+  default = 3
 }
 variable "image_tag" {
   type = string

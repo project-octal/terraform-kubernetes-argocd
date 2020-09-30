@@ -33,3 +33,23 @@ variable "oidc_config" {
   description = "OIDC configuration as an alternative to dex"
   default     = null
 }
+variable "repository_credentials" {
+  type        = list(map(any))
+  description = "A list of git repositories that ArgoCD will be configured to use."
+  default     = []
+}
+variable "argocd_git_repositories" {
+  type        = list(map(any))
+  description = "A list of credentials that ArgoCD will use when pulling from configured repositories."
+  default     = []
+}
+variable "argocd_repositories" {
+  type        = list(map(any))
+  description = "A list of repositories that ArgoCD might pull from."
+  default     = []
+}
+variable "argocd_repository_credentials" {
+  type        = list(map(any))
+  description = "A list of repositories that ArgoCD might pull from."
+  default     = []
+}
