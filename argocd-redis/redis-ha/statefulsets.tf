@@ -153,13 +153,13 @@ resource "kubernetes_stateful_set" "argocd_redis_ha" {
               memory = var.memory_limit
             }
           }
-          readiness_probe {
-            tcp_socket {
-              port = 26379
-            }
-            initial_delay_seconds = 15
-            period_seconds        = 5
-          }
+          #readiness_probe {
+          #  tcp_socket {
+          #    port = 26379
+          #  }
+          #  initial_delay_seconds = 15
+          #  period_seconds        = 5
+          #}
           liveness_probe {
             tcp_socket {
               port = 26379
