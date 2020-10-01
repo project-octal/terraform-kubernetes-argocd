@@ -1,7 +1,7 @@
 variable "argocd_url" {
   type        = string
   description = "Argo CD's externally facing base URL. Required when configuring SSO"
-  default     = null
+  default     = "https://127.0.0.1:8080"
 }
 variable "oidc_config" {
   type = object({
