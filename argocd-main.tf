@@ -1,4 +1,3 @@
-
 module "argocd_redis" {
   source = "./argocd-redis"
 
@@ -55,6 +54,8 @@ module "argocd_application_controller" {
 }
 module "argocd_dex" {
   source = "./argocd-dex"
+
+  count = var.enable_dex ? 1 : 0
 
   namespace         = kubernetes_namespace.argocd_namespace.metadata.0.name
   dex_version       = var.dex_image_tag
