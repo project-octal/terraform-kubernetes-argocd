@@ -3,10 +3,18 @@ variable "argocd_url" {
   description = "Argo CD's externally facing base URL. Required when configuring SSO"
   default     = null
 }
-variable "enable_oidc" {
-  type        = bool
-  description = "Sets whether or not to enable OIDC authentication"
-  default     = false
+variable "oidc_config" {
+  type = object({
+    name: string,
+    issuer: string,
+    client_id: string,
+    client_secret: string,
+    requested_scopes: list(string),
+    requested_id_token_claims: map(any),
+    cli_client_id: string
+  })
+  description = "OIDC authorization provider settings. For more information please refer to: https://argoproj.github.io/argo-cd/operator-manual/user-management/#existing-oidc-provider"
+  default = null
 }
 variable "enable_status_badge" {
   type        = bool
@@ -27,11 +35,6 @@ variable "helm_chat_text" {
   type        = string
   description = "The text for getting chat help"
   default     = "Chat now!"
-}
-variable "oidc_config" {
-  type        = object({ name : string, issuer : string, clientID : string, clientSecret : string, requestedScopes : list(string), requestedIDTokenClaims : map(any) })
-  description = "OIDC configuration as an alternative to dex"
-  default     = null
 }
 variable "repository_credentials" {
   type        = list(map(any))
