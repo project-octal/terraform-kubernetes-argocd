@@ -53,6 +53,12 @@ resource "kubernetes_config_map" "argocd_rbac_cm" {
       "app.kubernetes.io/part-of" : "argocd"
     }, var.labels)
   }
+  data = {
+    "policy.csv"     = templatefile("${path.module}/configuration-files/policy.csv", {})
+    "policy.default" = "role:readonly"
+    # essential to get argo to use groups for RBAC:
+    "scopes" = "[http://your.domain/groups, email]"
+  }
 }
 
 resource "kubernetes_config_map" "argocd_ssh_known_hosts_cm" {
