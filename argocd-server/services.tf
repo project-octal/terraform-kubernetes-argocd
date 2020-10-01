@@ -1,9 +1,9 @@
 resource "kubernetes_service" "argocd_server_metrics" {
   metadata {
-    name      = var.name
+    name      = "${var.name}-metrics"
     namespace = var.namespace
     labels = merge({
-      "app.kubernetes.io/name" : var.name
+      "app.kubernetes.io/name" : "${var.name}-metrics"
     }, local.labels)
   }
   spec {
@@ -14,7 +14,7 @@ resource "kubernetes_service" "argocd_server_metrics" {
       target_port = 8083
     }
     selector = {
-      "app.kubernetes.io/name" : var.name
+      "app.kubernetes.io/name" : "${var.name}-metrics"
     }
   }
 }
