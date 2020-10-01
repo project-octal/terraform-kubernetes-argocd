@@ -55,7 +55,7 @@ resource "kubernetes_deployment" "server_deployment" {
             value = tostring(var.replicas)
           }
           env {
-            name = "ARGOCD_MAX_CONCURRENT_LOGIN_REQUESTS_COUNT"
+            name  = "ARGOCD_MAX_CONCURRENT_LOGIN_REQUESTS_COUNT"
             value = "0"
           }
           port {

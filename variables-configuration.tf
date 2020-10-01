@@ -56,3 +56,7 @@ variable "argocd_repository_credentials" {
   description = "A list of repositories that ArgoCD might pull from."
   default     = []
 }
+variable "pod_affinity_topology_key" {
+  type    = string
+  default = "failure-domain.beta.kubernetes.io/zone"
+}

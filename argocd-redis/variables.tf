@@ -26,3 +26,6 @@ variable "image_repository" {
 variable "image_pull_policy" {
   type = string
 }
+variable "pod_affinity_topology_key" {
+  type = string
+}

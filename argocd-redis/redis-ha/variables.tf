@@ -33,8 +33,7 @@ variable "image_pull_policy" {
   type = string
 }
 variable "pod_affinity_topology_key" {
-  type    = string
-  default = "failure-domain.beta.kubernetes.io/zone"
+  type = string
 }
 variable "cpu_request" {
   type    = string
