@@ -54,6 +54,10 @@ resource "kubernetes_deployment" "server_deployment" {
             name  = "ARGOCD_API_SERVER_REPLICAS"
             value = tostring(var.replicas)
           }
+          env {
+            name = "ARGOCD_MAX_CONCURRENT_LOGIN_REQUESTS_COUNT"
+            value = "0"
+          }
           port {
             container_port = 8080
           }
