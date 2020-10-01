@@ -19,8 +19,7 @@ variable "redis_port" {
   type = number
 }
 variable "replicas" {
-  type    = number
-  default = 1
+  type = number
 }
 variable "image_tag" {
   type = string

@@ -5,8 +5,7 @@ variable "namespace" {
   type = string
 }
 variable "enable_ha_redis" {
-  type    = bool
-  default = true
+  type = bool
 }
 variable "haproxy_image_tag" {
   type = string

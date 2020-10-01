@@ -1,3 +1,8 @@
+variable "enable_ha_redis" {
+  type    = bool
+  default = true
+}
+
 ###########################
 ## HAProxy Configuration ##
 ###########################

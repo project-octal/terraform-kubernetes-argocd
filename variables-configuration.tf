@@ -1,3 +1,13 @@
+
+variable "argocd_repo_replicas" {
+  type    = number
+  default = 2
+}
+variable "argocd_server_replicas" {
+  type    = number
+  default = 2
+}
+
 variable "argocd_url" {
   type        = string
   description = "Argo CD's externally facing base URL. Required when configuring SSO"

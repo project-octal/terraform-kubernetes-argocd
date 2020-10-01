@@ -6,20 +6,11 @@ variable "namespace" {
 }
 variable "name" {
   type    = string
-  default = "argocd-repo-server"
+  default = "argocd-redis"
 }
 variable "component" {
   type    = string
-  default = "repo-server"
-}
-variable "redis_address" {
-  type = string
-}
-variable "redis_port" {
-  type = number
-}
-variable "replicas" {
-  type = number
+  default = "redis"
 }
 variable "image_tag" {
   type = string
@@ -32,10 +23,6 @@ variable "image_repository" {
 }
 variable "image_pull_policy" {
   type = string
-}
-variable "pod_affinity_topology_key" {
-  type    = string
-  default = "failure-domain.beta.kubernetes.io/zone"
 }
 variable "cpu_request" {
   type    = string
