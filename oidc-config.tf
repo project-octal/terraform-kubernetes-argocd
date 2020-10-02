@@ -6,6 +6,5 @@ locals {
     clientSecret           = var.oidc_config.client_secret
     requestedScopes        = var.oidc_config.requested_scopes
     requestedIDTokenClaims = var.oidc_config.requested_id_token_claims
-    cliClientID            = var.oidc_config.cli_client_id
   }
 }

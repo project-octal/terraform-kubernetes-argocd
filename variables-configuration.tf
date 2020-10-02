@@ -20,8 +20,7 @@ variable "oidc_config" {
     client_id : string,
     client_secret : string,
     requested_scopes : list(string),
-    requested_id_token_claims : map(any),
-    cli_client_id : string
+    requested_id_token_claims : map(any)
   })
   description = "OIDC authorization provider settings. For more information please refer to: https://argoproj.github.io/argo-cd/operator-manual/user-management/#existing-oidc-provider"
   default     = null
