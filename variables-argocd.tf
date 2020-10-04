@@ -36,3 +36,11 @@ variable "image_pull_policy" {
   description = "Determines when the image should be pulled prior to starting the container. `Always`: Always pull the image. | `IfNotPresent`: Only pull the image if it does not already exist on the node. | `Never`: Never pull the image"
   default     = "Always"
 }
+variable "cluster_cert_issuer" {
+  type = string
+  description = "The cluster certificate issuer to use when creating a TLS certificate for the ingress"
+}
+variable "ingress_class" {
+  type = string
+  description = "The ingress class that the ArgoCD ingress record should reference."
+}
