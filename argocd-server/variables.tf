@@ -57,10 +57,10 @@ variable "argocd_url" {
   type = string
 }
 variable "ingress_class" {
-  type = string
+  type        = string
   description = "The ingress class that the ArgoCD ingress record should reference."
 }
 variable "cluster_cert_issuer" {
-  type = string
+  type        = string
   description = "The cluster certificate issuer to use when creating a TLS certificate for the ingress"
 }

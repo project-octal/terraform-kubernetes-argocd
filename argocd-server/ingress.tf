@@ -6,8 +6,8 @@ resource "kubernetes_ingress" "argcd_ingress" {
       "app.kubernetes.io/name" : var.name
     }, local.labels)
     annotations = {
-      "cert-manager.io/cluster-issuer": var.cluster_cert_issuer
-      "kubernetes.io/ingress.class": var.ingress_class
+      "cert-manager.io/cluster-issuer" : var.cluster_cert_issuer
+      "kubernetes.io/ingress.class" : var.ingress_class
     }
   }
   spec {

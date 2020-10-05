@@ -2,9 +2,9 @@
 ## Dex Configuration ##
 #######################
 variable "enable_dex" {
-  type = bool
+  type        = bool
   description = "Determines whether or not to deploy Dex alongside ArgoCD"
-  default = true
+  default     = true
 }
 variable "dex_image_tag" {
   type        = string
