@@ -15,8 +15,9 @@ resource "kubernetes_ingress" "argcd_ingress" {
       host = var.argocd_url
       http {
         path {
+          path = "/"
           backend {
-            service_name = kubernetes_service.argocd_server.spec.0.port.0.name
+            service_name = kubernetes_service.argocd_server.metadata.0.name
             service_port = kubernetes_service.argocd_server.spec.0.port.0.port
           }
         }
