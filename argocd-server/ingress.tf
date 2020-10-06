@@ -8,20 +8,13 @@ resource "kubernetes_ingress" "argcd_ingress" {
     annotations = {
       "cert-manager.io/cluster-issuer" : var.cluster_cert_issuer
       "kubernetes.io/ingress.class" : var.ingress_class
+      "ingress.kubernetes.io/protocol": "https"
     }
   }
   spec {
-    rule {
-      host = var.argocd_url
-      http {
-        path {
-          path = "/"
-          backend {
-            service_name = kubernetes_service.argocd_server.metadata.0.name
-            service_port = kubernetes_service.argocd_server.spec.0.port.0.port
-          }
-        }
-      }
+    backend {
+      service_name = kubernetes_service.argocd_server.metadata.0.name
+      service_port = "https" #kubernetes_service.argocd_server.spec.0.port.0.port
     }
     tls {
       hosts = [
