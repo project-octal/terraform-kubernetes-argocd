@@ -20,7 +20,7 @@ resource "kubernetes_ingress" "argcd_ingress" {
       host = var.argocd_url
       http {
         path {
-          path = "*"
+          path = "/"
         }
       }
     }
