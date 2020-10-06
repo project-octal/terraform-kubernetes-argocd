@@ -16,6 +16,14 @@ resource "kubernetes_ingress" "argcd_ingress" {
       service_name = kubernetes_service.argocd_server.metadata.0.name
       service_port = "https" #kubernetes_service.argocd_server.spec.0.port.0.port
     }
+    rule {
+      host = var.argocd_url
+      http {
+        path {
+          path = "*"
+        }
+      }
+    }
     tls {
       hosts = [
         var.argocd_url
