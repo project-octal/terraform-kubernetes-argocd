@@ -1,9 +1,9 @@
 resource "kubernetes_deployment" "argocd_application_controller" {
   metadata {
-    name      = "argocd-application-controller"
+    name      = var.name
     namespace = var.namespace
     labels = merge({
-      "app.kubernetes.io/name" : "argocd-application-controller"
+      "app.kubernetes.io/name" : var.name
       "app.kubernetes.io/component" : "application-controller"
       "app.kubernetes.io/part-of" : "argocd"
     }, var.labels)
@@ -11,7 +11,7 @@ resource "kubernetes_deployment" "argocd_application_controller" {
   spec {
     selector {
       match_labels = {
-        "app.kubernetes.io/name" : "argocd-application-controller"
+        "app.kubernetes.io/name" : var.name
       }
     }
     strategy {
@@ -20,7 +20,7 @@ resource "kubernetes_deployment" "argocd_application_controller" {
     template {
       metadata {
         labels = merge({
-          "app.kubernetes.io/name" : "argocd-application-controller"
+          "app.kubernetes.io/name" : var.name
         }, var.labels)
       }
       spec {
@@ -29,17 +29,17 @@ resource "kubernetes_deployment" "argocd_application_controller" {
         # TODO: Add this!
         # security_context {}
         container {
-          name              = "argocd-application-controller"
+          name              = var.name
           image             = "${var.image_repository}/${var.argocd_image}:${var.argocd_version}"
           image_pull_policy = var.image_pull_policy
           command = [
-            "argocd-application-controller",
+            var.name,
             "--status-processors",
             "20",
             "--operation-processors",
             "10",
             "--redis",
-            "argocd-redis-ha-haproxy:6379"
+            "${var.redis_address}:${var.redis_port}"
           ]
           # TODO: Resource requirements will need to be declared
           resources {}

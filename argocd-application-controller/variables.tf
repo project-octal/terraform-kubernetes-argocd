@@ -1,6 +1,10 @@
 ###########################
 ## General Configuration ##
 ###########################
+variable "name" {
+  type    = string
+  default = "argocd-application-controller"
+}
 variable "namespace" {
   type        = string
   description = "The namespace this ArgoCD deployment will reside in."
@@ -24,4 +28,10 @@ variable "argocd_image" {
 variable "labels" {
   type        = map(string)
   description = "Extra Kubernetes labels to include with the resources created by this module"
+}
+variable "redis_address" {
+  type = string
+}
+variable "redis_port" {
+  type = number
 }

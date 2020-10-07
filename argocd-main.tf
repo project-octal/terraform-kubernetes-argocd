@@ -54,6 +54,8 @@ module "argocd_application_controller" {
   image_repository  = var.image_repository
   image_pull_policy = var.image_pull_policy
   labels            = local.labels
+  redis_address     = module.argocd_redis.redis_address
+  redis_port        = module.argocd_redis.redis_port
 }
 module "argocd_dex" {
   source = "./argocd-dex"
