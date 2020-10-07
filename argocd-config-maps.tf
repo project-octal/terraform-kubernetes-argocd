@@ -27,7 +27,7 @@ resource "kubernetes_config_map" "argocd_cm" {
     }, var.labels)
   }
   data = {
-    url                      = var.argocd_url
+    url                      = "https://${var.argocd_url}"
     "oidc.config"            = var.oidc_config != null ? yamlencode(local.oidc_config) : null
     "repositories"           = yamlencode(var.argocd_repositories),
     "repository.credentials" = yamlencode(var.argocd_repository_credentials)
