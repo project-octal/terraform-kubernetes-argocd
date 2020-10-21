@@ -14,7 +14,7 @@ module "argcd_ingress_route" {
           name      = kubernetes_service.argocd_server.metadata.0.name
           namespace = kubernetes_service.argocd_server.metadata.0.namespace
           port      = 443
-          scheme    = https
+          scheme    = "https"
         }
       ]
     }
