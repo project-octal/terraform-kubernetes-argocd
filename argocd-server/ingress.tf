@@ -9,6 +9,7 @@ module "argcd_ingress_route" {
   route_rules = [
     {
       match_rule = "Host(`${var.argocd_url}`)"
+      middlewares = []
       services = [
         {
           name      = kubernetes_service.argocd_server.metadata.0.name
