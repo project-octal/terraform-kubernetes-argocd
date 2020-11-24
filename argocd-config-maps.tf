@@ -55,7 +55,7 @@ resource "kubernetes_config_map" "argocd_rbac_cm" {
     }, var.labels)
   }
   data = {
-    "policy.csv"     = templatefile("${path.module}/configuration-files/policy.csv", {})
+    "policy.csv" = templatefile("${path.module}/configuration-files/policy.csv", {})
     #"policy.default" = "role:readonly"
     # essential to get argo to use groups for RBAC:
     "scopes" = "[https://example.com/claims/groups, email]"

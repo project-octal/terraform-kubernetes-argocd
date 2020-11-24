@@ -1,5 +1,5 @@
 module "argcd_ingress_route" {
-  source = "github.com/turnbros/terraform-octal-ingress-route"
+  source = "github.com/project-octal/terraform-octal-ingress-route"
 
   name        = var.name
   namespace   = var.namespace
@@ -8,7 +8,7 @@ module "argcd_ingress_route" {
   dns_name    = var.argocd_url
   route_rules = [
     {
-      match_rule = "Host(`${var.argocd_url}`)"
+      match_rule  = "Host(`${var.argocd_url}`)"
       middlewares = []
       services = [
         {
