@@ -50,11 +50,11 @@ resource "kubernetes_deployment" "argocd_repo_server" {
           image_pull_policy = var.image_pull_policy
           command           = ["uid_entrypoint.sh", "argocd-repo-server", "--redis", "${var.redis_address}:${var.redis_port}"]
           resources {
-            requests {
+            requests = {
               cpu    = var.cpu_request
               memory = var.memory_request
             }
-            limits {
+            limits = {
               cpu    = var.cpu_limit
               memory = var.memory_limit
             }

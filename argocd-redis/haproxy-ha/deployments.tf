@@ -83,11 +83,11 @@ resource "kubernetes_deployment" "haproxy_deployment" {
             container_port = 6379
           }
           resources {
-            requests {
+            requests = {
               cpu    = var.cpu_request
               memory = var.memory_request
             }
-            limits {
+            limits = {
               cpu    = var.cpu_limit
               memory = var.memory_limit
             }
@@ -113,11 +113,11 @@ resource "kubernetes_deployment" "haproxy_deployment" {
           command           = ["sh"]
           args              = ["/readonly/haproxy_init.sh"]
           resources {
-            requests {
+            requests = {
               cpu    = var.cpu_request
               memory = var.memory_request
             }
-            limits {
+            limits = {
               cpu    = var.cpu_limit
               memory = var.memory_limit
             }

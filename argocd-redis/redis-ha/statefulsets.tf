@@ -77,11 +77,11 @@ resource "kubernetes_stateful_set" "argocd_redis_ha" {
             value = "3acbca861108bc47379b71b1d87d1c137dce591f"
           }
           resources {
-            requests {
+            requests = {
               cpu    = var.cpu_request
               memory = var.memory_request
             }
-            limits {
+            limits = {
               cpu    = var.cpu_limit
               memory = var.memory_limit
             }
@@ -104,11 +104,11 @@ resource "kubernetes_stateful_set" "argocd_redis_ha" {
           command           = ["redis-server"]
           args              = ["/data/conf/redis.conf"]
           resources {
-            requests {
+            requests = {
               cpu    = var.cpu_request
               memory = var.memory_request
             }
-            limits {
+            limits = {
               cpu    = var.cpu_limit
               memory = var.memory_limit
             }
@@ -144,11 +144,11 @@ resource "kubernetes_stateful_set" "argocd_redis_ha" {
           command           = ["redis-sentinel"]
           args              = ["/data/conf/sentinel.conf"]
           resources {
-            requests {
+            requests = {
               cpu    = var.cpu_request
               memory = var.memory_request
             }
-            limits {
+            limits = {
               cpu    = var.cpu_limit
               memory = var.memory_limit
             }

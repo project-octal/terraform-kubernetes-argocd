@@ -65,11 +65,11 @@ resource "kubernetes_deployment" "server_deployment" {
             container_port = 8083
           }
           resources {
-            requests {
+            requests = {
               cpu    = var.cpu_request
               memory = var.memory_request
             }
-            limits {
+            limits = {
               cpu    = var.cpu_limit
               memory = var.memory_limit
             }
