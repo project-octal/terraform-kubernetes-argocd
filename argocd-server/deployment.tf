@@ -79,7 +79,7 @@ resource "kubernetes_deployment" "server_deployment" {
               path = "/healthz"
               port = 8080
             }
-            initial_delay_seconds = 5
+            initial_delay_seconds = 30
             period_seconds        = 5
           }
           readiness_probe {
@@ -87,7 +87,7 @@ resource "kubernetes_deployment" "server_deployment" {
               path = "/healthz"
               port = 8080
             }
-            initial_delay_seconds = 3
+            initial_delay_seconds = 30
             period_seconds        = 30
           }
           volume_mount {
