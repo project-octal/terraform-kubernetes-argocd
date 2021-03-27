@@ -39,19 +39,19 @@ variable "pod_affinity_topology_key" {
 }
 variable "cpu_request" {
   type    = string
-  default = "25m"
+  default = "50m"
 }
 variable "memory_request" {
   type    = string
-  default = "32Mi"
+  default = "64Mi"
 }
 variable "cpu_limit" {
   type    = string
-  default = "50m"
+  default = "100m"
 }
 variable "memory_limit" {
   type    = string
-  default = "64Mi"
+  default = "128Mi"
 }
 variable "argocd_url" {
   type = string
