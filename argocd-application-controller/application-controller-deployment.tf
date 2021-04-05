@@ -38,6 +38,8 @@ resource "kubernetes_deployment" "argocd_application_controller" {
             "20",
             "--operation-processors",
             "10",
+            "--repo-server-timeout-seconds",
+            "300",
             "--redis",
             "${var.redis_address}:${var.redis_port}"
           ]
