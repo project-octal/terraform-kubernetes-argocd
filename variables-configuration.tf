@@ -69,3 +69,8 @@ variable "pod_affinity_topology_key" {
   type    = string
   default = "failure-domain.beta.kubernetes.io/zone"
 }
+variable "repo_server_exec_timeout" {
+  type = string
+  description = ""
+  default = "90s"
+}

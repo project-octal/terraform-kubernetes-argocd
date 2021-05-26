@@ -26,6 +26,8 @@ module "argocd_repo_server" {
   replicas      = var.argocd_repo_replicas
   redis_address = module.argocd_redis.redis_address
   redis_port    = module.argocd_redis.redis_port
+
+  exec_timeout  = var.repo_server_exec_timeout
 }
 
 module "argocd_server" {

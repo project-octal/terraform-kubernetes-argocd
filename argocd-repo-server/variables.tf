@@ -53,3 +53,8 @@ variable "memory_limit" {
   type    = string
   default = "64Mi"
 }
+variable "exec_timeout" {
+  type = string
+  description = ""
+  default = "90s"
+}
