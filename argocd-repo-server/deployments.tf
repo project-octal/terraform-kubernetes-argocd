@@ -50,7 +50,7 @@ resource "kubernetes_deployment" "argocd_repo_server" {
           image_pull_policy = var.image_pull_policy
           command           = ["uid_entrypoint.sh", "argocd-repo-server", "--redis", "${var.redis_address}:${var.redis_port}"]
           env {
-            name = "ARGOCD_EXEC_TIMEOUT"
+            name  = "ARGOCD_EXEC_TIMEOUT"
             value = var.exec_timeout
           }
           resources {
