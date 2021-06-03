@@ -38,20 +38,16 @@ variable "pod_affinity_topology_key" {
   default = "failure-domain.beta.kubernetes.io/zone"
 }
 variable "cpu_request" {
-  type    = string
-  default = "25m"
+  type = string
 }
 variable "memory_request" {
-  type    = string
-  default = "32Mi"
+  type = string
 }
 variable "cpu_limit" {
-  type    = string
-  default = "50m"
+  type = string
 }
 variable "memory_limit" {
-  type    = string
-  default = "64Mi"
+  type = string
 }
 variable "exec_timeout" {
   type        = string

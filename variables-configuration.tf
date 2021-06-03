@@ -1,11 +1,72 @@
-
+######################################
+## ArgoCD Repo Server Configuration ##
+######################################
 variable "argocd_repo_replicas" {
-  type    = number
-  default = 2
+  type        = number
+  description = ""
+  default     = 2
 }
+
+variable "argocd_repo_requests" {
+  type = object({
+    cpu : optional(string)
+    memory : optional(string)
+  })
+  description = ""
+  default = {
+    cpu    = null
+    memory = null
+  }
+}
+
+variable "argocd_repo_limits" {
+  type = object({
+    cpu : optional(string)
+    memory : optional(string)
+  })
+  description = ""
+  default = {
+    cpu    = null
+    memory = null
+  }
+}
+
+variable "repo_server_exec_timeout" {
+  type        = string
+  description = ""
+  default     = "90s"
+}
+
+#####################################
+## ArgoCD App Server Configuration ##
+#####################################
 variable "argocd_server_replicas" {
   type    = number
   default = 2
+}
+
+variable "argocd_server_requests" {
+  type = object({
+    cpu : string
+    memory : string
+  })
+  description = ""
+  default = {
+    cpu    = null
+    memory = null
+  }
+}
+
+variable "argocd_server_limits" {
+  type = object({
+    cpu : string
+    memory : string
+  })
+  description = ""
+  default = {
+    cpu    = null
+    memory = null
+  }
 }
 
 variable "argocd_url" {
@@ -68,9 +129,4 @@ variable "argocd_repository_credentials" {
 variable "pod_affinity_topology_key" {
   type    = string
   default = "failure-domain.beta.kubernetes.io/zone"
-}
-variable "repo_server_exec_timeout" {
-  type        = string
-  description = ""
-  default     = "90s"
 }

@@ -27,6 +27,12 @@ module "argocd_repo_server" {
   redis_address = module.argocd_redis.redis_address
   redis_port    = module.argocd_redis.redis_port
 
+  cpu_request    = local.argocd_repo_requests_cpu
+  memory_request = local.argocd_repo_requests_memory
+
+  cpu_limit    = local.argocd_repo_limits_cpu
+  memory_limit = local.argocd_repo_limits_memory
+
   exec_timeout = var.repo_server_exec_timeout
 }
 
@@ -39,6 +45,12 @@ module "argocd_server" {
   image_repository  = var.image_repository
   image_pull_policy = var.image_pull_policy
   labels            = local.labels
+
+  cpu_request    = local.argocd_server_requests_cpu
+  memory_request = local.argocd_server_requests_memory
+
+  cpu_limit    = local.argocd_server_limits_cpu
+  memory_limit = local.argocd_server_limits_memory
 
   replicas            = var.argocd_server_replicas
   redis_address       = module.argocd_redis.redis_address

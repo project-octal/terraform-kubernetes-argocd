@@ -1,12 +1,14 @@
 terraform {
-  required_version = ">= 0.13"
+  required_version = ">= 0.14"
+  experiments      = [module_variable_optional_attrs]
   required_providers {
     kubernetes = {
       source = "hashicorp/kubernetes"
+      version = "2.0.2"
     }
     k8s = {
-      version = ">= 0.8.0"
       source  = "banzaicloud/k8s"
+      version = "0.8.0"
     }
   }
 }

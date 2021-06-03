@@ -3,4 +3,17 @@ locals {
     "app.kubernetes.io/part-of" : "argocd"
     # Some more labels go here...
   }, var.labels)
+
+  argocd_repo_requests_cpu    = var.argocd_repo_requests.cpu == null ? "50m" : var.argocd_repo_requests.cpu
+  argocd_repo_requests_memory = var.argocd_repo_requests.memory == null ? "32Mi" : var.argocd_repo_requests.memory
+
+  argocd_repo_limits_cpu    = var.argocd_repo_limits.cpu == null ? "100m" : var.argocd_repo_limits.cpu
+  argocd_repo_limits_memory = var.argocd_repo_limits.memory == null ? "64Mi" : var.argocd_repo_limits.memory
+
+
+  argocd_server_requests_cpu    = var.argocd_server_requests.cpu == null ? "50m" : var.argocd_server_requests.cpu
+  argocd_server_requests_memory = var.argocd_server_requests.memory == null ? "64Mi" : var.argocd_server_requests.memory
+
+  argocd_server_limits_cpu    = var.argocd_server_limits.cpu == null ? "100m" : var.argocd_server_limits.cpu
+  argocd_server_limits_memory = var.argocd_server_limits.memory == null ? "128Mi" : var.argocd_server_limits.memory
 }
