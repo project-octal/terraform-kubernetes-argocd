@@ -12,3 +12,8 @@ argoproj.io/Application:
           end
         end
         return hs
+extensions/Ingress:
+    health.lua: |
+      hs = {}
+      hs.status = "Healthy"
+      return hs
