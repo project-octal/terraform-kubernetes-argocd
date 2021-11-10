@@ -8,6 +8,63 @@ Simplifies the deployment and management of ArgoCD on a Kubernetes cluster.
 - Deprecate the `k8s` provider in favor of the `kubernetes_manifest` resource in the `kubernetes` provider.
 - Add support for the latest version of ArgoCD. 
 
+## Example
+```hcl-terraform
+module "argocd" {
+  source = "git::https://github.com/project-octal/terraform-kubernetes-argocd.git?ref=fix/progressing-ingress"
+
+  argocd_url = "argocd.turnbros.app"
+  argocd_image_tag  = "v2.0.2"
+  haproxy_image_tag = "2.0.4"
+  redis_image_tag   = "6.2.1-alpine"
+
+  namespace              = "kube-argocd"
+  argocd_server_replicas = 2
+  argocd_repo_replicas   = 2
+
+  enable_dex      = false
+  enable_ha_redis = false
+
+  cluster_cert_issuer = module.cert_manager.cert_issuer
+  ingress_class       = module.traefik.ingress_class
+
+  argocd_server_requests = {
+    cpu = "300m"
+    memory = "256Mi"
+  }
+  argocd_server_limits = {
+    cpu = "600m"
+    memory = "512Mi"
+  }
+
+  repo_server_exec_timeout = "300"
+  argocd_repo_requests = {
+    cpu = "300m"
+    memory = "256Mi"
+  }
+  argocd_repo_limits = {
+    cpu = "600m"
+    memory = "512Mi"
+  }
+  argocd_repositories = [
+    {
+      name = "Helm-Main"
+      type = "helm"
+      url = "https://charts.helm.sh/stable"
+    }
+  ]
+
+  oidc_config = {
+    name                      = var.argocd_oidc_name
+    issuer                    = var.argocd_oidc_issuer
+    client_id                 = var.argocd_oidc_client_id
+    client_secret             = var.argocd_oidc_client_secret
+    requested_scopes          = var.argocd_oidc_requested_scopes
+    requested_id_token_claims = var.argocd_oidc_requested_id_token_claims
+  }
+}
+```
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
