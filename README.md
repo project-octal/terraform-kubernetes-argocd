@@ -1,15 +1,14 @@
 ![Alt text](docs/images/project-octal-argocd.svg "Project Octal ArgoCD")
 ---
 
-# terraform-kubernetes-argocd
 Simplifies the deployment and management of ArgoCD on a Kubernetes cluster.
 
-## TODO:
+### TODO:
 - Update the Terraform version to 1.0+
 - Deprecate the `k8s` provider in favor of the `kubernetes_manifest` resource in the `kubernetes` provider.
 - Add support for the latest version of ArgoCD. 
 
-## Example
+### Example
 ```hcl-terraform
 module "argocd" {
   source = "git::https://github.com/project-octal/terraform-kubernetes-argocd.git?ref=fix/progressing-ingress"
