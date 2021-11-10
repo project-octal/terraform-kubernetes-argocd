@@ -1,4 +1,5 @@
 ![Alt text](docs/images/project-octal-argocd.svg "Project Octal ArgoCD")
+---
 
 # terraform-kubernetes-argocd
 Simplifies the deployment and management of ArgoCD on a Kubernetes cluster.
@@ -70,7 +71,7 @@ module "argocd" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | \>= 0.14 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.14 |
 | <a name="requirement_k8s"></a> [k8s](#requirement\_k8s) | 0.8.0 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | 2.0.2 |
 
