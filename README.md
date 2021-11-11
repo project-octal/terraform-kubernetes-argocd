@@ -1,4 +1,4 @@
-![Alt text](docs/images/project-octal-argocd.svg "Project Octal ArgoCD")
+![Project Octal: ArgoCD](docs/images/project-octal-argocd.svg "Project Octal ArgoCD")
 ---
 
 Simplifies the deployment and management of ArgoCD on a Kubernetes cluster.
