@@ -60,3 +60,8 @@ variable "cluster_cert_issuer" {
   type        = string
   description = "The cluster certificate issuer to use when creating a TLS certificate for the ingress"
 }
+
+variable "enable_ingress" {
+  type = bool
+  default = false
+}

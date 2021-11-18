@@ -29,7 +29,7 @@ variable "argocd_image_name" {
 variable "image_repository" {
   type        = string
   description = "The image repository to use when pulling images."
-  default     = "registry.hub.docker.com"
+  default     = "quay.io"
 }
 variable "image_pull_policy" {
   type        = string
@@ -43,4 +43,9 @@ variable "cluster_cert_issuer" {
 variable "ingress_class" {
   type        = string
   description = "The ingress class that the ArgoCD ingress record should reference."
+}
+
+variable "enable_ingress" {
+  type = bool
+  default = false
 }
