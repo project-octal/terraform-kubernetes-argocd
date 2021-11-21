@@ -1,6 +1,6 @@
 #TODO: This should be replaced with something generic
 module "argcd_ingress_route" {
-  count = var.enable_ingress ? 1 :0
+  count  = var.enable_ingress ? 1 : 0
   source = "github.com/project-octal/terraform-octal-ingress-route"
 
   name        = var.name

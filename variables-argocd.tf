@@ -46,6 +46,6 @@ variable "ingress_class" {
 }
 
 variable "enable_ingress" {
-  type = bool
+  type    = bool
   default = false
 }
