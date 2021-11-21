@@ -26,7 +26,7 @@ variable "argocd_image_name" {
   description = "The image to use when deploying ArgoCD"
   default     = "argoproj/argocd"
 }
-variable "image_repository" {
+variable "argocd_image_repository" {
   type        = string
   description = "The image repository to use when pulling images."
   default     = "quay.io"
@@ -46,6 +46,7 @@ variable "ingress_class" {
 }
 
 variable "enable_ingress" {
-  type    = bool
-  default = false
+  type        = bool
+  description = "If set to `true` an ingress route will be created for ArgoCD"
+  default     = false
 }

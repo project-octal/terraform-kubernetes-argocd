@@ -2,26 +2,29 @@ module "argocd_redis" {
   source = "./argocd-redis"
 
   namespace                 = kubernetes_namespace.argocd_namespace.metadata.0.name
-  pod_affinity_topology_key = var.pod_affinity_topology_key
-  enable_ha_redis           = var.enable_ha_redis
-  haproxy_image_name        = var.haproxy_image_name
-  haproxy_image_tag         = var.haproxy_image_tag
-  redis_image_name          = var.redis_image_name
-  redis_image_tag           = var.redis_image_tag
-  image_repository          = var.redis_image_repository
   image_pull_policy         = var.image_pull_policy
   labels                    = local.labels
+  pod_affinity_topology_key = var.pod_affinity_topology_key
+
+  enable_ha_redis          = var.enable_ha_redis
+  haproxy_image_name       = var.haproxy_image_name
+  haproxy_image_tag        = var.haproxy_image_tag
+  haproxy_image_repository = var.haproxy_image_repository
+  redis_image_name         = var.redis_image_name
+  redis_image_tag          = var.redis_image_tag
+  redis_image_repository   = var.redis_image_repository
 }
 
 module "argocd_repo_server" {
   source = "./argocd-repo-server"
 
   namespace         = kubernetes_namespace.argocd_namespace.metadata.0.name
-  image_tag         = var.argocd_image_tag
-  image_name        = var.argocd_image_name
-  image_repository  = var.image_repository
   image_pull_policy = var.image_pull_policy
   labels            = local.labels
+
+  image_tag        = var.argocd_image_tag
+  image_name       = var.argocd_image_name
+  image_repository = var.argocd_image_repository
 
   replicas      = var.argocd_repo_replicas
   redis_address = module.argocd_redis.redis_address
@@ -40,11 +43,12 @@ module "argocd_server" {
   source = "./argocd-server"
 
   namespace         = kubernetes_namespace.argocd_namespace.metadata.0.name
-  image_tag         = var.argocd_image_tag
-  image_name        = var.argocd_image_name
-  image_repository  = var.image_repository
   image_pull_policy = var.image_pull_policy
   labels            = local.labels
+
+  image_tag        = var.argocd_image_tag
+  image_name       = var.argocd_image_name
+  image_repository = var.argocd_image_repository
 
   cpu_request    = local.argocd_server_requests_cpu
   memory_request = local.argocd_server_requests_memory
@@ -63,13 +67,14 @@ module "argocd_application_controller" {
   source = "./argocd-application-controller"
 
   namespace         = kubernetes_namespace.argocd_namespace.metadata.0.name
-  argocd_version    = var.argocd_image_tag
-  argocd_image      = var.argocd_image_name
-  image_repository  = var.image_repository
   image_pull_policy = var.image_pull_policy
   labels            = local.labels
-  redis_address     = module.argocd_redis.redis_address
-  redis_port        = module.argocd_redis.redis_port
+
+  argocd_version   = var.argocd_image_tag
+  argocd_image     = var.argocd_image_name
+  image_repository = var.argocd_image_repository
+  redis_address    = module.argocd_redis.redis_address
+  redis_port       = module.argocd_redis.redis_port
 }
 module "argocd_dex" {
   source = "./argocd-dex"
@@ -77,10 +82,14 @@ module "argocd_dex" {
   count = var.enable_dex ? 1 : 0
 
   namespace         = kubernetes_namespace.argocd_namespace.metadata.0.name
-  dex_version       = var.dex_image_tag
-  dex_image         = var.dex_image_name
-  image_repository  = var.image_repository
   image_pull_policy = var.image_pull_policy
   labels            = local.labels
+
+  argocd_image_tag        = var.argocd_image_tag
+  argocd_image_name       = var.argocd_image_name
+  argocd_image_repository = var.argocd_image_repository
+  dex_image_tag           = var.dex_image_tag
+  dex_image_name          = var.dex_image_name
+  dex_image_repository    = var.dex_image_repository
 }
 
