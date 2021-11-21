@@ -1,6 +1,6 @@
 variable "enable_ha_redis" {
   type    = bool
-  default = true
+  default = false
 }
 
 ###########################
@@ -9,7 +9,7 @@ variable "enable_ha_redis" {
 variable "haproxy_image_tag" {
   type        = string
   description = "Defines which docker image tag to use for HAProxy"
-  default     = "2.0.4"
+  default     = "2.0.25-alpine"
 }
 variable "haproxy_image_name" {
   type        = string
@@ -23,10 +23,16 @@ variable "haproxy_image_name" {
 variable "redis_image_tag" {
   type        = string
   description = "The version of the Redis Docker image to deploy."
-  default     = "5.0.8-alpine"
+  default     = "6.2.4-alpine"
 }
 variable "redis_image_name" {
   type        = string
   description = ""
-  default     = "library/redis"
+  default     = "redis"
+}
+
+variable "redis_image_repository" {
+  type        = string
+  description = ""
+  default     = "docker.io/library"
 }

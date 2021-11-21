@@ -8,7 +8,7 @@ module "argocd_redis" {
   haproxy_image_tag         = var.haproxy_image_tag
   redis_image_name          = var.redis_image_name
   redis_image_tag           = var.redis_image_tag
-  image_repository          = var.image_repository
+  image_repository          = var.redis_image_repository
   image_pull_policy         = var.image_pull_policy
   labels                    = local.labels
 }
