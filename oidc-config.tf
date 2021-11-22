@@ -1,5 +1,5 @@
 locals {
-  oidc_config = {
+  oidc_config = var.oidc_config == null ? null : {
     name                   = var.oidc_config.name
     issuer                 = var.oidc_config.issuer
     clientID               = var.oidc_config.client_id

@@ -152,3 +152,4 @@ module "argocd" {
 |------|-------------|
 | <a name="output_namespace"></a> [namespace](#output\_namespace) | n/a |
 <!-- END_TF_DOCS -->
+

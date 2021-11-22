@@ -6,7 +6,7 @@ module "argocd_haproxy_ha" {
   namespace                 = var.namespace
   image_tag                 = var.haproxy_image_tag
   image_name                = var.haproxy_image_name
-  image_repository          = var.image_repository
+  image_repository          = var.haproxy_image_repository
   image_pull_policy         = var.image_pull_policy
   labels                    = var.labels
   pod_affinity_topology_key = var.pod_affinity_topology_key
@@ -20,7 +20,7 @@ module "argocd_redis_ha" {
   namespace                 = var.namespace
   image_tag                 = var.redis_image_tag
   image_name                = var.redis_image_name
-  image_repository          = var.image_repository
+  image_repository          = var.redis_image_repository
   image_pull_policy         = var.image_pull_policy
   labels                    = var.labels
   pod_affinity_topology_key = var.pod_affinity_topology_key
@@ -34,7 +34,7 @@ module "argocd_redis" {
   namespace         = var.namespace
   image_tag         = var.redis_image_tag
   image_name        = var.redis_image_name
-  image_repository  = var.image_repository
+  image_repository  = var.redis_image_repository
   image_pull_policy = var.image_pull_policy
   labels            = var.labels
 }

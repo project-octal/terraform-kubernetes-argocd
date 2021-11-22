@@ -19,17 +19,17 @@ variable "namespace_annotations" {
 variable "argocd_image_tag" {
   type        = string
   description = "The version of ArgoCD to deploy."
-  default     = "v1.7.7"
+  default     = "v2.1.7"
 }
 variable "argocd_image_name" {
   type        = string
   description = "The image to use when deploying ArgoCD"
   default     = "argoproj/argocd"
 }
-variable "image_repository" {
+variable "argocd_image_repository" {
   type        = string
   description = "The image repository to use when pulling images."
-  default     = "registry.hub.docker.com"
+  default     = "docker.io"
 }
 variable "image_pull_policy" {
   type        = string
@@ -43,4 +43,10 @@ variable "cluster_cert_issuer" {
 variable "ingress_class" {
   type        = string
   description = "The ingress class that the ArgoCD ingress record should reference."
+}
+
+variable "enable_ingress" {
+  type        = bool
+  description = "If set to `true` an ingress route will be created for ArgoCD"
+  default     = true
 }

@@ -13,13 +13,16 @@ variable "haproxy_image_tag" {
 variable "haproxy_image_name" {
   type = string
 }
+variable "haproxy_image_repository" {
+  type = string
+}
 variable "redis_image_tag" {
   type = string
 }
 variable "redis_image_name" {
   type = string
 }
-variable "image_repository" {
+variable "redis_image_repository" {
   type = string
 }
 variable "image_pull_policy" {
