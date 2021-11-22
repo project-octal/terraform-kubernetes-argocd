@@ -48,5 +48,5 @@ variable "ingress_class" {
 variable "enable_ingress" {
   type        = bool
   description = "If set to `true` an ingress route will be created for ArgoCD"
-  default     = false
+  default     = true
 }
