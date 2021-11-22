@@ -62,5 +62,5 @@ variable "cluster_cert_issuer" {
 }
 
 variable "enable_ingress" {
-  type    = bool
+  type = bool
 }
