@@ -14,10 +14,10 @@ variable "dex_image_tag" {
 variable "dex_image_name" {
   type        = string
   description = "The name of the Dex image to use"
-  default     = "dex"
+  default     = "dexidp/dex"
 }
 variable "dex_image_repository" {
   type        = string
   description = "The repository that the dex image will be obtained from"
-  default     = "docker.io/dexidp"
+  default     = "docker.io"
 }

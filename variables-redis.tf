@@ -19,7 +19,7 @@ variable "haproxy_image_name" {
 variable "haproxy_image_repository" {
   type        = string
   description = ""
-  default     = "docker.io/library"
+  default     = "docker.io"
 }
 
 #########################
@@ -39,5 +39,5 @@ variable "redis_image_name" {
 variable "redis_image_repository" {
   type        = string
   description = ""
-  default     = "docker.io/library"
+  default     = "docker.io"
 }
