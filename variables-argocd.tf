@@ -19,7 +19,7 @@ variable "namespace_annotations" {
 variable "argocd_image_tag" {
   type        = string
   description = "The version of ArgoCD to deploy."
-  default     = "v1.7.7"
+  default     = "v2.1.7"
 }
 variable "argocd_image_name" {
   type        = string
@@ -29,7 +29,7 @@ variable "argocd_image_name" {
 variable "argocd_image_repository" {
   type        = string
   description = "The image repository to use when pulling images."
-  default     = "quay.io"
+  default     = "docker.io"
 }
 variable "image_pull_policy" {
   type        = string
