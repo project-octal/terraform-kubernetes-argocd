@@ -62,6 +62,7 @@ module "argocd_server" {
   argocd_url          = var.argocd_url
   cluster_cert_issuer = var.cluster_cert_issuer
   ingress_class       = var.ingress_class
+  enable_ingress      = var.enable_ingress
 }
 module "argocd_application_controller" {
   source = "./argocd-application-controller"
