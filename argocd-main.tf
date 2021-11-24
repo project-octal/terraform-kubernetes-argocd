@@ -56,13 +56,16 @@ module "argocd_server" {
   cpu_limit    = local.argocd_server_limits_cpu
   memory_limit = local.argocd_server_limits_memory
 
-  replicas            = var.argocd_server_replicas
-  redis_address       = module.argocd_redis.redis_address
-  redis_port          = module.argocd_redis.redis_port
-  argocd_url          = var.argocd_url
-  cluster_cert_issuer = var.cluster_cert_issuer
-  ingress_class       = var.ingress_class
-  enable_ingress      = var.enable_ingress
+  replicas      = var.argocd_server_replicas
+  redis_address = module.argocd_redis.redis_address
+  redis_port    = module.argocd_redis.redis_port
+
+  ingress_enabled                = var.ingress_enabled
+  ingress_host                   = var.ingress_host
+  ingress_path                   = var.ingress_path
+  ingress_class_name             = var.ingress_class_name
+  ingress_annotations            = var.ingress_annotations
+  ingress_cert_issuer_annotation = var.ingress_cert_issuer_annotation
 }
 module "argocd_application_controller" {
   source = "./argocd-application-controller"

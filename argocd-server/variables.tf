@@ -49,18 +49,21 @@ variable "cpu_limit" {
 variable "memory_limit" {
   type = string
 }
-variable "argocd_url" {
+variable "ingress_host" {
   type = string
 }
-variable "ingress_class" {
-  type        = string
-  description = "The ingress class that the ArgoCD ingress record should reference."
+variable "ingress_path" {
+  type = string
 }
-variable "cluster_cert_issuer" {
-  type        = string
-  description = "The cluster certificate issuer to use when creating a TLS certificate for the ingress"
-}
-
-variable "enable_ingress" {
+variable "ingress_enabled" {
   type = bool
+}
+variable "ingress_class_name" {
+  type = string
+}
+variable "ingress_annotations" {
+  type = map(string)
+}
+variable "ingress_cert_issuer_annotation" {
+  type = map(string)
 }
