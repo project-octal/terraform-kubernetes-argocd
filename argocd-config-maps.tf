@@ -27,15 +27,13 @@ resource "kubernetes_config_map" "argocd_cm" {
     }, var.labels)
   }
   data = {
-    url                       = "https://${var.argocd_url}"
+    url                       = "https://${var.ingress_host}${var.ingress_path}"
     "oidc.config"             = var.oidc_config != null ? yamlencode(local.oidc_config) : null
     "repositories"            = yamlencode(var.argocd_repositories),
     "repository.credentials"  = yamlencode(var.argocd_repository_credentials)
     "resource.customizations" = templatefile("${path.module}/configuration-files/resource-customizations.yml", {})
   }
 }
-
-
 
 resource "kubernetes_config_map" "argocd_gpg_keys_cm" {
   metadata {

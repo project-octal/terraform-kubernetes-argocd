@@ -3,30 +3,53 @@
 
 Simplifies the deployment and management of ArgoCD on a Kubernetes cluster.
 
-### TODO:
-- Update the Terraform version to 1.0+
-- Deprecate the `k8s` provider in favor of the `kubernetes_manifest` resource in the `kubernetes` provider.
-- Add support for the latest version of ArgoCD. 
+**New in `v1.0.0`:**
+* No longer relies on the `banzaicloud/k8s` provider.
+* Can be deployed alongside any ingress controller.
+* Deployable with or without SSL (if you're into that kind of thing...)
+* This module no longer relies on external modules.
+
+---
+
+## IMPORTANT: Upgrading from v0.0.X to v1.0.X
+If you're currently on version `v0.0.5` or older the following steps need to be followed to prevent potential disruption. The following steps assume the root ArgoCD module was created with the name `my_argocd`
+```shell
+# Import the ArgoCD CRDs
+terraform import -var-file=secrets.tfvars 'module.my_argocd.kubernetes_manifest.app_projects' "apiVersion=apiextensions.k8s.io/v1,kind=CustomResourceDefinition,name=appprojects.argoproj.io"
+terraform import -var-file=secrets.tfvars 'module.my_argocd.kubernetes_manifest.applications' "apiVersion=apiextensions.k8s.io/v1,kind=CustomResourceDefinition,name=applications.argoproj.io"
+
+# Delete the old ArgoCD CRD references from the statefile
+terraform state rm 'module.my_argocd.k8s_manifest.app_projects'
+terraform state rm 'module.my_argocd.k8s_manifest.applications'
+
+# Lastly, run a Terraform apply to make sure the states are synced up.
+terraform apply -var-file secrets.tfvars
+```
+
+---
 
 ### Example
 ```hcl-terraform
 module "argocd" {
-  source = "git::https://github.com/project-octal/terraform-kubernetes-argocd.git?ref=fix/progressing-ingress"
-
-  argocd_url = "argocd.turnbros.app"
-  argocd_image_tag  = "v2.0.2"
-  haproxy_image_tag = "2.0.4"
-  redis_image_tag   = "6.2.1-alpine"
+  source  = "project-octal/argocd/kubernetes"
+  version = "1.0.0"
 
   namespace              = "kube-argocd"
   argocd_server_replicas = 2
   argocd_repo_replicas   = 2
+  enable_dex             = false
 
-  enable_dex      = false
-  enable_ha_redis = false
-
-  cluster_cert_issuer = module.cert_manager.cert_issuer
-  ingress_class       = module.traefik.ingress_class
+  ingress_enabled    = true
+  ingress_host       = "argocd.arroyo.turnbros.app"
+  ingress_path       = "/"
+  ingress_class_name = module.traefik.ingress_class
+  ingress_annotations = {
+    "traefik.ingress.kubernetes.io/router.entrypoints" : "websecure"
+    "traefik.ingress.kubernetes.io/router.tls" : "true"
+  }
+  ingress_cert_issuer_annotation = {
+    "cert-manager.io/cluster-issuer" : module.cert_manager.cert_issuer
+  }
 
   argocd_server_requests = {
     cpu = "300m"
