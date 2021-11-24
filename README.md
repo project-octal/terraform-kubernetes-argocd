@@ -6,7 +6,7 @@ Simplifies the deployment and management of ArgoCD on a Kubernetes cluster.
 **New in `v1.0.0`:**
 * No longer relies on the `banzaicloud/k8s` provider.
 * Can be deployed alongside any ingress controller.
-* Deployable with or without SSL (if you're into that kind of thing...)
+* Deployable without SSL (if you're into that kind of thing...)
 * This module no longer relies on external modules.
 
 ---
