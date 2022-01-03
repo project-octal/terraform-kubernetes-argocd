@@ -57,18 +57,16 @@ variable "exec_timeout" {
 variable "vault_secret_plugin_enabled" {
   type = bool
 }
-variable "vault_secret_plugin_config_secret" {
-  type = string
-}
 variable "vault_secret_plugin_artifact_url" {
   type = string
 }
-variable "vault_secret_plugin_token" {
+variable "vault_secret_plugin_secret_name" {
   type = string
 }
-variable "vault_secret_plugin_config" {
+variable "vault_secret_plugin_secret_config" {
   type = object({
     vault_addr    = string,
+    vault_token   = string,
     avp_auth_type = string,
     avp_type      = string
   })

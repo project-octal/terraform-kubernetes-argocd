@@ -39,10 +39,9 @@ module "argocd_repo_server" {
   exec_timeout = var.repo_server_exec_timeout
 
   vault_secret_plugin_enabled       = var.vault_secret_plugin_enabled
-  vault_secret_plugin_config_secret = var.vault_secret_plugin_config_secret
   vault_secret_plugin_artifact_url  = var.vault_secret_plugin_artifact_url
-  vault_secret_plugin_token         = var.vault_secret_plugin_token
-  vault_secret_plugin_config        = var.vault_secret_plugin_config
+  vault_secret_plugin_secret_name   = var.vault_secret_plugin_secret_name
+  vault_secret_plugin_secret_config = var.vault_secret_plugin_secret_config
 }
 
 module "argocd_server" {
