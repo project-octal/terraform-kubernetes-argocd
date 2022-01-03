@@ -37,6 +37,10 @@ module "argocd_repo_server" {
   memory_limit = local.argocd_repo_limits_memory
 
   exec_timeout = var.repo_server_exec_timeout
+
+  vault_secret_plugin_enabled       = var.vault_secret_plugin_enabled
+  vault_secret_plugin_config_secret = var.vault_secret_plugin_config_secret
+  vault_secret_plugin_artifact_url  = var.vault_secret_plugin_artifact_url
 }
 
 module "argocd_server" {

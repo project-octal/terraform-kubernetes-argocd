@@ -54,3 +54,12 @@ variable "exec_timeout" {
   description = ""
   default     = "90s"
 }
+variable "vault_secret_plugin_enabled" {
+  type = bool
+}
+variable "vault_secret_plugin_config_secret" {
+  type = string
+}
+variable "vault_secret_plugin_artifact_url" {
+  type = string
+}

@@ -1,3 +1,5 @@
+
+
 resource "kubernetes_deployment" "argocd_repo_server" {
   metadata {
     name      = var.name
@@ -44,6 +46,28 @@ resource "kubernetes_deployment" "argocd_repo_server" {
           }
         }
         automount_service_account_token = false
+
+        # This is dynamic because if we dont enabled vault_secret_plugin we dont need it
+        dynamic "init_container" {
+          for_each = var.vault_secret_plugin_enabled ? toset(["vault_secret_plugin"]) : []
+          content {
+            name              = "vault_secret_plugin"
+            image             = "alpine:3.8"
+            image_pull_policy = var.image_pull_policy
+            command           = ["sh", "-c"]
+            args = [<<EOT
+              "wget -O argocd-vault-plugin ${var.vault_secret_plugin_artifact_url} &&
+              chmod +x argocd-vault-plugin &&
+              mv argocd-vault-plugin /custom-tools/"
+            EOT
+            ]
+            volume_mount {
+              name       = "custom-tools"
+              mount_path = "/custom-tools"
+            }
+          }
+        }
+
         container {
           name              = var.name
           image             = "${var.image_repository}/${var.image_name}:${var.image_tag}"
@@ -53,6 +77,17 @@ resource "kubernetes_deployment" "argocd_repo_server" {
             name  = "ARGOCD_EXEC_TIMEOUT"
             value = var.exec_timeout
           }
+
+          # This is dynamic because if we dont enabled vault_secret_plugin we dont need it
+          dynamic "env_from" {
+            for_each = var.vault_secret_plugin_enabled ? toset(["vault_secret_plugin"]) : []
+            content {
+              secret_ref {
+                name = var.vault_secret_plugin_config_secret
+              }
+            }
+          }
+
           resources {
             requests = {
               cpu    = var.cpu_request
@@ -83,6 +118,16 @@ resource "kubernetes_deployment" "argocd_repo_server" {
           port {
             container_port = 8084
           }
+
+          # This is dynamic because if we dont enabled vault_secret_plugin we dont need it
+          dynamic "volume_mount" {
+            for_each = var.vault_secret_plugin_enabled ? toset(["vault_secret_plugin"]) : []
+            content {
+              name       = "custom-tools"
+              mount_path = "/custom-tools"
+            }
+          }
+
           volume_mount {
             name       = "ssh-known-hosts"
             mount_path = "/app/config/ssh"
@@ -100,6 +145,16 @@ resource "kubernetes_deployment" "argocd_repo_server" {
             mount_path = "/app/config/gpg/keys"
           }
         }
+
+        # This is dynamic because if we dont enabled vault_secret_plugin we dont need it
+        dynamic "volume" {
+          for_each = var.vault_secret_plugin_enabled ? toset(["vault_secret_plugin"]) : []
+          content {
+            name = "custom-tools"
+            empty_dir {}
+          }
+        }
+
         volume {
           name = "ssh-known-hosts"
           config_map {

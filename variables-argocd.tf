@@ -36,3 +36,15 @@ variable "image_pull_policy" {
   description = "Determines when the image should be pulled prior to starting the container. `Always`: Always pull the image. | `IfNotPresent`: Only pull the image if it does not already exist on the node. | `Never`: Never pull the image"
   default     = "Always"
 }
+variable "vault_secret_plugin_enabled" {
+  type    = bool
+  default = false
+}
+variable "vault_secret_plugin_config_secret" {
+  type    = string
+  default = "argocd-vault-plugin-credentials"
+}
+variable "vault_secret_plugin_artifact_url" {
+  type    = string
+  default = "https://github.com/IBM/argocd-vault-plugin/releases/download/v1.6.0/argocd-vault-plugin_1.6.0_linux_amd64"
+}
