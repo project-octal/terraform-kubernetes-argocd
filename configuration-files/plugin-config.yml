@@ -1,0 +1,4 @@
+- name: argocd-vault-plugin
+  generate:
+    command: ["argocd-vault-plugin"]
+    args: ["generate", "./"]
