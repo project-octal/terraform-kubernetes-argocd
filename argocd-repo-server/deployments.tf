@@ -83,7 +83,7 @@ resource "kubernetes_deployment" "argocd_repo_server" {
             for_each = var.vault_secret_plugin_enabled ? toset(["vault_secret_plugin"]) : []
             content {
               secret_ref {
-                name = var.vault_secret_plugin_config_secret
+                name = var.vault_secret_plugin_secret_name
               }
             }
           }
