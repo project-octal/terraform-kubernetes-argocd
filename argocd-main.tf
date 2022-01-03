@@ -41,6 +41,8 @@ module "argocd_repo_server" {
   vault_secret_plugin_enabled       = var.vault_secret_plugin_enabled
   vault_secret_plugin_config_secret = var.vault_secret_plugin_config_secret
   vault_secret_plugin_artifact_url  = var.vault_secret_plugin_artifact_url
+  vault_secret_plugin_token         = var.vault_secret_plugin_token
+  vault_secret_plugin_config        = var.vault_secret_plugin_config
 }
 
 module "argocd_server" {

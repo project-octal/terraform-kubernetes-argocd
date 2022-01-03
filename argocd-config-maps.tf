@@ -32,6 +32,13 @@ resource "kubernetes_config_map" "argocd_cm" {
     "repositories"            = yamlencode(var.argocd_repositories),
     "repository.credentials"  = yamlencode(var.argocd_repository_credentials)
     "resource.customizations" = templatefile("${path.module}/configuration-files/resource-customizations.yml", {})
+    "configManagementPlugins" = var.vault_secret_plugin_enabled ? yamlencode([{
+      name = "argocd-vault-plugin"
+      generate = {
+        command = ["argocd-vault-plugin"]
+        args    = ["generate", "./"]
+      }
+    }]) : null
   }
 }
 

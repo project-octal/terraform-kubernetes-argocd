@@ -41,10 +41,26 @@ variable "vault_secret_plugin_enabled" {
   default = false
 }
 variable "vault_secret_plugin_config_secret" {
-  type    = string
-  default = "argocd-vault-plugin-credentials"
+  type        = string
+  description = "The name given to the secret containing the Hashicorp vault token"
+  default     = "argocd-vault-plugin-credentials"
 }
 variable "vault_secret_plugin_artifact_url" {
-  type    = string
-  default = "https://github.com/IBM/argocd-vault-plugin/releases/download/v1.6.0/argocd-vault-plugin_1.6.0_linux_amd64"
+  type        = string
+  description = "The URL of the ArgoCD Vault plugin binary"
+  default     = "https://github.com/IBM/argocd-vault-plugin/releases/download/v1.6.0/argocd-vault-plugin_1.6.0_linux_amd64"
+}
+variable "vault_secret_plugin_token" {
+  type        = string
+  description = "The Hashicorp Vault token ArgoCD will use to authenticate with."
+  default     = null
+}
+variable "vault_secret_plugin_config" {
+  type = object({
+    vault_addr    = string,
+    avp_auth_type = string,
+    avp_type      = string
+  })
+  description = "The plugin configuration. Currently this only propperly support Hashicorp Vault, but in the future could support other vaults."
+  default     = null
 }

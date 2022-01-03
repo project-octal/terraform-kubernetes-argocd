@@ -63,3 +63,13 @@ variable "vault_secret_plugin_config_secret" {
 variable "vault_secret_plugin_artifact_url" {
   type = string
 }
+variable "vault_secret_plugin_token" {
+  type = string
+}
+variable "vault_secret_plugin_config" {
+  type = object({
+    vault_addr    = string,
+    avp_auth_type = string,
+    avp_type      = string
+  })
+}
