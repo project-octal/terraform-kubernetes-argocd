@@ -55,12 +55,7 @@ resource "kubernetes_deployment" "argocd_repo_server" {
             image             = "alpine:3.8"
             image_pull_policy = var.image_pull_policy
             command           = ["sh", "-c"]
-            args = [<<EOT
-              "wget -O argocd-vault-plugin ${var.vault_secret_plugin_artifact_url} &&
-              chmod +x argocd-vault-plugin &&
-              mv argocd-vault-plugin /custom-tools/"
-            EOT
-            ]
+            args = ["wget -O argocd-vault-plugin ${var.vault_secret_plugin_artifact_url} && chmod +x argocd-vault-plugin && mv argocd-vault-plugin /custom-tools/"]
             volume_mount {
               name       = "custom-tools"
               mount_path = "/custom-tools"
