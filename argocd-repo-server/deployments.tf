@@ -51,7 +51,7 @@ resource "kubernetes_deployment" "argocd_repo_server" {
         dynamic "init_container" {
           for_each = var.vault_secret_plugin_enabled ? toset(["vault_secret_plugin"]) : []
           content {
-            name              = "vault_secret_plugin"
+            name              = "vault-secret-plugin"
             image             = "alpine:3.8"
             image_pull_policy = var.image_pull_policy
             command           = ["sh", "-c"]
