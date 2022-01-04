@@ -119,10 +119,11 @@ resource "kubernetes_deployment" "argocd_repo_server" {
             for_each = var.vault_secret_plugin_enabled ? toset(["vault_secret_plugin"]) : []
             content {
               name       = "custom-tools"
-              mount_path = "/custom-tools"
+              mount_path = "/usr/local/bin/argocd-vault-plugin"
+              sub_path   = "argocd-vault-plugin"
             }
           }
-
+          
           volume_mount {
             name       = "ssh-known-hosts"
             mount_path = "/app/config/ssh"
