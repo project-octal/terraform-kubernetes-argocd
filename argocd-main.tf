@@ -37,6 +37,8 @@ module "argocd_repo_server" {
   memory_limit = local.argocd_repo_limits_memory
 
   exec_timeout = var.repo_server_exec_timeout
+
+  argocd_plugins = var.argocd_plugins
 }
 
 module "argocd_server" {

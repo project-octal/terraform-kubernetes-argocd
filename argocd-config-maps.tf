@@ -88,3 +88,15 @@ resource "kubernetes_config_map" "argocd_tls_certs_cm" {
   }
   data = null
 }
+
+resource "kubernetes_config_map" "argocd_cmp_plugin" {
+  metadata {
+    name      = "argocd-cmp-plugin"
+    namespace = kubernetes_namespace.argocd_namespace.metadata.0.name
+    labels = merge({
+      "app.kubernetes.io/name" : "argocd-cmp-plugin"
+      "app.kubernetes.io/part-of" : "argocd"
+    }, var.labels)
+  }
+  data = { for plugin_config in var.argocd_plugins : "${plugin_config.name}-plugin.yaml" => yamlencode(plugin_config.config) }
+}

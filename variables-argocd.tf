@@ -36,3 +36,16 @@ variable "image_pull_policy" {
   description = "Determines when the image should be pulled prior to starting the container. `Always`: Always pull the image. | `IfNotPresent`: Only pull the image if it does not already exist on the node. | `Never`: Never pull the image"
   default     = "Always"
 }
+
+variable "argocd_plugins" {
+  type = list(object({
+    name              = string
+    image_repository  = string
+    image_name        = string
+    image_tag         = string
+    image_pull_policy = string
+    config            = any
+  }))
+  description = ""
+  default     = []
+}

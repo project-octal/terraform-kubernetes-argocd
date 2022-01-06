@@ -100,6 +100,28 @@ resource "kubernetes_deployment" "argocd_repo_server" {
             mount_path = "/app/config/gpg/keys"
           }
         }
+
+        dynamic "container" {
+          for_each = { for plugin in var.argocd_plugins : plugin.name => plugin }
+
+          content {
+            name              = "${var.name}-plugin-${container.value["name"]}"
+            image             = "${var.image_repository}/${var.image_name}:${var.image_tag}"
+            image_pull_policy = var.image_pull_policy
+            command           = ["argocd-cmp-server"]
+            security_context {
+              run_as_non_root = true
+              run_as_user     = 999
+            }
+            volume_mount {
+              name       = "plugin-cm"
+              mount_path = "/home/argocd/cmp-server/config/plugin.yaml" # Plugin config file can either be volume mapped or baked into image
+              sub_path   = "${container.value["name"]}-plugin.yaml"
+            }
+          }
+
+        }
+
         volume {
           name = "ssh-known-hosts"
           config_map {
@@ -121,6 +143,16 @@ resource "kubernetes_deployment" "argocd_repo_server" {
         volume {
           name = "gpg-keyring"
           empty_dir {}
+        }
+
+        dynamic "volume" {
+          for_each = length(var.argocd_plugins) > 0 ? toset(["plugin_config"]) : []
+          content {
+            name = "plugin-cm"
+            config_map {
+              name = "argocd-plugin-cm"
+            }
+          }
         }
       }
     }

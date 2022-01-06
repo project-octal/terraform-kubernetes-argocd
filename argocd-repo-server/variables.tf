@@ -54,3 +54,13 @@ variable "exec_timeout" {
   description = ""
   default     = "90s"
 }
+variable "argocd_plugins" {
+  type = list(object({
+    name              = string
+    image_repository  = string
+    image_name        = string
+    image_tag         = string
+    image_pull_policy = string
+    config            = any
+  }))
+}
