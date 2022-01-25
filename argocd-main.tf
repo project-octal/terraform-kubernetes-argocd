@@ -1,6 +1,11 @@
 module "argocd_redis" {
   source = "./argocd-redis"
 
+  depends_on = [
+    kubernetes_manifest.applications, 
+    kubernetes_manifest.app_projects
+  ]
+
   namespace                 = kubernetes_namespace.argocd_namespace.metadata.0.name
   image_pull_policy         = var.image_pull_policy
   labels                    = local.labels
@@ -17,6 +22,11 @@ module "argocd_redis" {
 
 module "argocd_repo_server" {
   source = "./argocd-repo-server"
+
+  depends_on = [
+    kubernetes_manifest.applications, 
+    kubernetes_manifest.app_projects
+  ]
 
   namespace         = kubernetes_namespace.argocd_namespace.metadata.0.name
   image_pull_policy = var.image_pull_policy
@@ -43,6 +53,11 @@ module "argocd_repo_server" {
 
 module "argocd_server" {
   source = "./argocd-server"
+
+  depends_on = [
+    kubernetes_manifest.applications, 
+    kubernetes_manifest.app_projects
+  ]
 
   namespace         = kubernetes_namespace.argocd_namespace.metadata.0.name
   image_pull_policy = var.image_pull_policy
