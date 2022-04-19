@@ -81,9 +81,9 @@ variable "oidc_config" {
   default     = null
 }
 variable "oidc_group_claim" {
-  type = string
+  type        = string
   description = "The name of the claim that contains the list of groups a user belongs to"
-  default = null
+  default     = null
 }
 variable "enable_status_badge" {
   type        = bool
