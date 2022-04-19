@@ -94,7 +94,7 @@ module "argocd" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.14, < 2.0.0 |
-| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.6.1 |
+| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.8.0 |
 
 ## Providers
 
@@ -166,6 +166,7 @@ module "argocd" {
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | The namespace this ArgoCD deployment will reside in. | `string` | `"argocd"` | no |
 | <a name="input_namespace_annotations"></a> [namespace\_annotations](#input\_namespace\_annotations) | Additional ArgoCD namespace annotations (e.g. for `linkerd.io/inject: enabled` for mesh things) | `map(string)` | `{}` | no |
 | <a name="input_oidc_config"></a> [oidc\_config](#input\_oidc\_config) | OIDC authorization provider settings. For more information please refer to: https://argoproj.github.io/argo-cd/operator-manual/user-management/#existing-oidc-provider | <pre>object({<br>    name : string,<br>    issuer : string,<br>    client_id : string,<br>    client_secret : string,<br>    requested_scopes : list(string),<br>    requested_id_token_claims : map(any)<br>  })</pre> | `null` | no |
+| <a name="input_oidc_group_claim"></a> [oidc\_group\_claim](#input\_oidc\_group\_claim) | The name of the claim that contains the list of groups a user belongs to | `string` | `null` | no |
 | <a name="input_pod_affinity_topology_key"></a> [pod\_affinity\_topology\_key](#input\_pod\_affinity\_topology\_key) | n/a | `string` | `"failure-domain.beta.kubernetes.io/zone"` | no |
 | <a name="input_redis_image_name"></a> [redis\_image\_name](#input\_redis\_image\_name) | n/a | `string` | `"redis"` | no |
 | <a name="input_redis_image_repository"></a> [redis\_image\_repository](#input\_redis\_image\_repository) | n/a | `string` | `"docker.io"` | no |

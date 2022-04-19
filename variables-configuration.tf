@@ -80,6 +80,11 @@ variable "oidc_config" {
   description = "OIDC authorization provider settings. For more information please refer to: https://argoproj.github.io/argo-cd/operator-manual/user-management/#existing-oidc-provider"
   default     = null
 }
+variable "oidc_group_claim" {
+  type        = string
+  description = "The name of the claim that contains the list of groups a user belongs to"
+  default     = null
+}
 variable "enable_status_badge" {
   type        = bool
   description = "Enables application status badge feature"
