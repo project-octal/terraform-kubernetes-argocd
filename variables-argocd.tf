@@ -19,7 +19,7 @@ variable "namespace_annotations" {
 variable "argocd_image_tag" {
   type        = string
   description = "The version of ArgoCD to deploy."
-  default     = "v2.2.2"
+  default     = "v2.4.0"
 }
 variable "argocd_image_name" {
   type        = string
