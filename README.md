@@ -94,13 +94,13 @@ module "argocd" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.14, < 2.0.0 |
-| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 2.8.0 |
+| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >= 2.8.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.6.1 |
+| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.8.0 |
 
 ## Modules
 
@@ -135,14 +135,14 @@ module "argocd" {
 | <a name="input_argocd_image_name"></a> [argocd\_image\_name](#input\_argocd\_image\_name) | The image to use when deploying ArgoCD | `string` | `"argoproj/argocd"` | no |
 | <a name="input_argocd_image_repository"></a> [argocd\_image\_repository](#input\_argocd\_image\_repository) | The image repository to use when pulling images. | `string` | `"docker.io"` | no |
 | <a name="input_argocd_image_tag"></a> [argocd\_image\_tag](#input\_argocd\_image\_tag) | The version of ArgoCD to deploy. | `string` | `"v2.2.2"` | no |
-| <a name="input_argocd_repo_limits"></a> [argocd\_repo\_limits](#input\_argocd\_repo\_limits) | n/a | <pre>object({<br>    cpu : optional(string)<br>    memory : optional(string)<br>  })</pre> | <pre>{<br>  "cpu": null,<br>  "memory": null<br>}</pre> | no |
+| <a name="input_argocd_repo_limits"></a> [argocd\_repo\_limits](#input\_argocd\_repo\_limits) | n/a | <pre>object({<br>    cpu : string<br>    memory : string<br>  })</pre> | <pre>{<br>  "cpu": null,<br>  "memory": null<br>}</pre> | no |
 | <a name="input_argocd_repo_replicas"></a> [argocd\_repo\_replicas](#input\_argocd\_repo\_replicas) | ##################################### # ArgoCD Repo Server Configuration ## ##################################### | `number` | `2` | no |
-| <a name="input_argocd_repo_requests"></a> [argocd\_repo\_requests](#input\_argocd\_repo\_requests) | n/a | <pre>object({<br>    cpu : optional(string)<br>    memory : optional(string)<br>  })</pre> | <pre>{<br>  "cpu": null,<br>  "memory": null<br>}</pre> | no |
+| <a name="input_argocd_repo_requests"></a> [argocd\_repo\_requests](#input\_argocd\_repo\_requests) | n/a | <pre>object({<br>    cpu : string<br>    memory : string<br>  })</pre> | <pre>{<br>  "cpu": "300m",<br>  "memory": "256Mi"<br>}</pre> | no |
 | <a name="input_argocd_repositories"></a> [argocd\_repositories](#input\_argocd\_repositories) | A list of repositories that ArgoCD might pull from. | `list(map(any))` | `[]` | no |
 | <a name="input_argocd_repository_credentials"></a> [argocd\_repository\_credentials](#input\_argocd\_repository\_credentials) | A list of repositories that ArgoCD might pull from. | `list(map(any))` | `[]` | no |
 | <a name="input_argocd_server_limits"></a> [argocd\_server\_limits](#input\_argocd\_server\_limits) | n/a | <pre>object({<br>    cpu : string<br>    memory : string<br>  })</pre> | <pre>{<br>  "cpu": null,<br>  "memory": null<br>}</pre> | no |
 | <a name="input_argocd_server_replicas"></a> [argocd\_server\_replicas](#input\_argocd\_server\_replicas) | #################################### # ArgoCD App Server Configuration ## #################################### | `number` | `2` | no |
-| <a name="input_argocd_server_requests"></a> [argocd\_server\_requests](#input\_argocd\_server\_requests) | n/a | <pre>object({<br>    cpu : string<br>    memory : string<br>  })</pre> | <pre>{<br>  "cpu": null,<br>  "memory": null<br>}</pre> | no |
+| <a name="input_argocd_server_requests"></a> [argocd\_server\_requests](#input\_argocd\_server\_requests) | n/a | <pre>object({<br>    cpu : string<br>    memory : string<br>  })</pre> | <pre>{<br>  "cpu": "300m",<br>  "memory": "256Mi"<br>}</pre> | no |
 | <a name="input_dex_image_name"></a> [dex\_image\_name](#input\_dex\_image\_name) | The name of the Dex image to use | `string` | `"dexidp/dex"` | no |
 | <a name="input_dex_image_repository"></a> [dex\_image\_repository](#input\_dex\_image\_repository) | The repository that the dex image will be obtained from | `string` | `"docker.io"` | no |
 | <a name="input_dex_image_tag"></a> [dex\_image\_tag](#input\_dex\_image\_tag) | The version of the Dex Docker image to deploy. | `string` | `"2.30.0"` | no |
@@ -167,11 +167,11 @@ module "argocd" {
 | <a name="input_namespace_annotations"></a> [namespace\_annotations](#input\_namespace\_annotations) | Additional ArgoCD namespace annotations (e.g. for `linkerd.io/inject: enabled` for mesh things) | `map(string)` | `{}` | no |
 | <a name="input_oidc_config"></a> [oidc\_config](#input\_oidc\_config) | OIDC authorization provider settings. For more information please refer to: https://argoproj.github.io/argo-cd/operator-manual/user-management/#existing-oidc-provider | <pre>object({<br>    name : string,<br>    issuer : string,<br>    client_id : string,<br>    client_secret : string,<br>    requested_scopes : list(string),<br>    requested_id_token_claims : map(any)<br>  })</pre> | `null` | no |
 | <a name="input_oidc_group_claim"></a> [oidc\_group\_claim](#input\_oidc\_group\_claim) | The name of the claim that contains the list of groups a user belongs to | `string` | `null` | no |
-| <a name="input_pod_affinity_topology_key"></a> [pod\_affinity\_topology\_key](#input\_pod\_affinity\_topology\_key) | n/a | `string` | `"failure-domain.beta.kubernetes.io/zone"` | no |
+| <a name="input_pod_affinity_topology_key"></a> [pod\_affinity\_topology\_key](#input\_pod\_affinity\_topology\_key) | n/a | `string` | `"topology.kubernetes.io/zone"` | no |
 | <a name="input_redis_image_name"></a> [redis\_image\_name](#input\_redis\_image\_name) | n/a | `string` | `"redis"` | no |
 | <a name="input_redis_image_repository"></a> [redis\_image\_repository](#input\_redis\_image\_repository) | n/a | `string` | `"docker.io"` | no |
 | <a name="input_redis_image_tag"></a> [redis\_image\_tag](#input\_redis\_image\_tag) | The version of the Redis Docker image to deploy. | `string` | `"6.2.6-alpine"` | no |
-| <a name="input_repo_server_exec_timeout"></a> [repo\_server\_exec\_timeout](#input\_repo\_server\_exec\_timeout) | n/a | `string` | `"90s"` | no |
+| <a name="input_repo_server_exec_timeout"></a> [repo\_server\_exec\_timeout](#input\_repo\_server\_exec\_timeout) | n/a | `string` | `"300s"` | no |
 | <a name="input_repository_credentials"></a> [repository\_credentials](#input\_repository\_credentials) | A list of git repositories that ArgoCD will be configured to use. | `list(map(any))` | `[]` | no |
 
 ## Outputs

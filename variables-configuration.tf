@@ -9,20 +9,20 @@ variable "argocd_repo_replicas" {
 
 variable "argocd_repo_requests" {
   type = object({
-    cpu : optional(string)
-    memory : optional(string)
+    cpu : string
+    memory : string
   })
   description = ""
   default = {
-    cpu    = null
-    memory = null
+    cpu    = "300m"
+    memory = "256Mi"
   }
 }
 
 variable "argocd_repo_limits" {
   type = object({
-    cpu : optional(string)
-    memory : optional(string)
+    cpu : string
+    memory : string
   })
   description = ""
   default = {
@@ -34,7 +34,7 @@ variable "argocd_repo_limits" {
 variable "repo_server_exec_timeout" {
   type        = string
   description = ""
-  default     = "90s"
+  default     = "300s"
 }
 
 #####################################
@@ -52,8 +52,8 @@ variable "argocd_server_requests" {
   })
   description = ""
   default = {
-    cpu    = null
-    memory = null
+    cpu    = "300m"
+    memory = "256Mi"
   }
 }
 
@@ -127,5 +127,5 @@ variable "argocd_repository_credentials" {
 }
 variable "pod_affinity_topology_key" {
   type    = string
-  default = "failure-domain.beta.kubernetes.io/zone"
+  default = "topology.kubernetes.io/zone"
 }
