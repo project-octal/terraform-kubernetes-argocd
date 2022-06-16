@@ -8,4 +8,5 @@ resource "kubernetes_service_account" "argocd_application_controller" {
       "app.kubernetes.io/part-of" : "argocd"
     }, var.labels)
   }
+  automount_service_account_token = false
 }

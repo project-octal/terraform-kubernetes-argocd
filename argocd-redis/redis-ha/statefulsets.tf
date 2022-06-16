@@ -28,7 +28,8 @@ resource "kubernetes_stateful_set" "argocd_redis_ha" {
         }
       }
       spec {
-        service_account_name = kubernetes_service_account.redis_ha_service_account.metadata.0.name
+        service_account_name            = kubernetes_service_account.redis_ha_service_account.metadata.0.name
+        automount_service_account_token = false
         affinity {
           pod_anti_affinity {
             preferred_during_scheduling_ignored_during_execution {
