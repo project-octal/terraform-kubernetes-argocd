@@ -8,3 +8,15 @@ resource "kubernetes_service_account" "haproxy_service_account" {
   }
   automount_service_account_token = false
 }
+
+resource "kubernetes_secret" "haproxy_service_account" {
+  metadata {
+    name      = "${var.name}-token-secret"
+    namespace = var.namespace
+    annotations = {
+      "kubernetes.io/service-account.name"      = var.name
+      "kubernetes.io/service-account.namespace" = var.namespace
+    }
+  }
+  type = "kubernetes.io/service-account-token"
+}

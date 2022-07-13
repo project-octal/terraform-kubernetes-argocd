@@ -29,7 +29,7 @@ resource "kubernetes_deployment" "haproxy_deployment" {
       }
       spec {
         service_account_name            = kubernetes_service_account.haproxy_service_account.metadata.0.name
-        automount_service_account_token = false
+        automount_service_account_token = true
         security_context {
           run_as_non_root = true
           fs_group        = 1000

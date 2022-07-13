@@ -10,3 +10,15 @@ resource "kubernetes_service_account" "argocd_application_controller" {
   }
   automount_service_account_token = false
 }
+
+resource "kubernetes_secret" "argocd_application_controller" {
+  metadata {
+    name      = "${var.name}-token-secret"
+    namespace = var.namespace
+    annotations = {
+      "kubernetes.io/service-account.name"      = var.name
+      "kubernetes.io/service-account.namespace" = var.namespace
+    }
+  }
+  type = "kubernetes.io/service-account-token"
+}
