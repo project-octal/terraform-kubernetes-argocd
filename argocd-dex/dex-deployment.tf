@@ -66,8 +66,19 @@ resource "kubernetes_deployment" "dex_server" {
           # TODO: Add these!
           # resources {}
           volume_mount {
+            name       = "service-token"
+            mount_path = "/var/run/secrets/kubernetes.io/serviceaccount/"
+            read_only  = true
+          }
+          volume_mount {
             name       = "static-files"
             mount_path = "/shared"
+          }
+        }
+        volume {
+          name = "service-token"
+          secret {
+            secret_name = kubernetes_service_account.dex_server.default_secret_name
           }
         }
         volume {

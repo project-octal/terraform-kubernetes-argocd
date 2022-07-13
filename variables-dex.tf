@@ -9,7 +9,7 @@ variable "enable_dex" {
 variable "dex_image_tag" {
   type        = string
   description = "The version of the Dex Docker image to deploy."
-  default     = "2.30.0"
+  default     = "2.32.0"
 }
 variable "dex_image_name" {
   type        = string

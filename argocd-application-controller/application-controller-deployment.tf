@@ -8,7 +8,9 @@ resource "kubernetes_deployment" "argocd_application_controller" {
       "app.kubernetes.io/part-of" : "argocd"
     }, var.labels)
   }
+
   spec {
+
     selector {
       match_labels = {
         "app.kubernetes.io/name" : var.name
@@ -25,7 +27,7 @@ resource "kubernetes_deployment" "argocd_application_controller" {
       }
       spec {
         service_account_name            = kubernetes_service_account.argocd_application_controller.metadata.0.name
-        automount_service_account_token = true
+        automount_service_account_token = false
         # TODO: Add this!
         # security_context {}
         container {
@@ -63,6 +65,17 @@ resource "kubernetes_deployment" "argocd_application_controller" {
           }
           port {
             container_port = 8082
+          }
+          volume_mount {
+            name       = "service-token"
+            mount_path = "/var/run/secrets/kubernetes.io/serviceaccount/"
+            read_only  = true
+          }
+        }
+        volume {
+          name = "service-token"
+          secret {
+            secret_name = kubernetes_service_account.argocd_application_controller.default_secret_name
           }
         }
       }

@@ -9,8 +9,8 @@ variable "argocd_repo_replicas" {
 
 variable "argocd_repo_requests" {
   type = object({
-    cpu : optional(string)
-    memory : optional(string)
+    cpu : string
+    memory : string
   })
   description = ""
   default = {
@@ -21,8 +21,8 @@ variable "argocd_repo_requests" {
 
 variable "argocd_repo_limits" {
   type = object({
-    cpu : optional(string)
-    memory : optional(string)
+    cpu : string
+    memory : string
   })
   description = ""
   default = {
@@ -127,5 +127,5 @@ variable "argocd_repository_credentials" {
 }
 variable "pod_affinity_topology_key" {
   type    = string
-  default = "failure-domain.beta.kubernetes.io/zone"
+  default = "topology.kubernetes.io/zone"
 }

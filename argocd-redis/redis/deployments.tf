@@ -19,6 +19,7 @@ resource "kubernetes_deployment" "argocd_redis" {
         }
       }
       spec {
+        automount_service_account_token = false
         container {
           name              = "redis"
           image             = "${var.image_repository}/${var.image_name}:${var.image_tag}"
