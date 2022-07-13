@@ -21,7 +21,7 @@ resource "kubernetes_deployment" "server_deployment" {
       }
       spec {
         service_account_name            = kubernetes_service_account.server_service_account.metadata.0.name
-        automount_service_account_token = false
+        automount_service_account_token = true
         affinity {
           pod_anti_affinity {
             preferred_during_scheduling_ignored_during_execution {
@@ -91,23 +91,12 @@ resource "kubernetes_deployment" "server_deployment" {
             period_seconds        = 30
           }
           volume_mount {
-            name       = "service-token"
-            mount_path = "/var/run/secrets/kubernetes.io/serviceaccount/"
-            read_only  = true
-          }
-          volume_mount {
             name       = "ssh-known-hosts"
             mount_path = "/app/config/ssh"
           }
           volume_mount {
             name       = "tls-certs"
             mount_path = "/app/config/tls"
-          }
-        }
-        volume {
-          name = "service-token"
-          secret {
-            secret_name = kubernetes_service_account.server_service_account.default_secret_name
           }
         }
         volume {

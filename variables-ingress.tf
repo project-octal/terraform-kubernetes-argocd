@@ -2,7 +2,7 @@
 variable "ingress_host" {
   type        = string
   description = "Argo CD's externally facing host. Required when configuring SSO"
-  default     = null
+  default     = ""
 }
 variable "ingress_path" {
   type        = string
@@ -12,12 +12,12 @@ variable "ingress_path" {
 variable "ingress_enabled" {
   type        = bool
   description = "If set to `true` an ingress route will be created for ArgoCD"
-  default     = true
+  default     = false
 }
 variable "ingress_class_name" {
   type        = string
   description = "The ingress class that the ArgoCD ingress record should reference."
-  default     = null
+  default     = ""
 }
 variable "ingress_annotations" {
   type        = map(string)

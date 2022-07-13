@@ -4,7 +4,7 @@
 variable "argocd_repo_replicas" {
   type        = number
   description = ""
-  default     = 2
+  default     = 1
 }
 
 variable "argocd_repo_requests" {
@@ -14,8 +14,8 @@ variable "argocd_repo_requests" {
   })
   description = ""
   default = {
-    cpu    = "300m"
-    memory = "256Mi"
+    cpu    = "100m"
+    memory = "64Mi"
   }
 }
 
@@ -26,8 +26,8 @@ variable "argocd_repo_limits" {
   })
   description = ""
   default = {
-    cpu    = null
-    memory = null
+    cpu    = "200m"
+    memory = "128Mi"
   }
 }
 
@@ -42,7 +42,7 @@ variable "repo_server_exec_timeout" {
 #####################################
 variable "argocd_server_replicas" {
   type    = number
-  default = 2
+  default = 1
 }
 
 variable "argocd_server_requests" {
@@ -52,8 +52,8 @@ variable "argocd_server_requests" {
   })
   description = ""
   default = {
-    cpu    = "300m"
-    memory = "256Mi"
+    cpu    = "200m"
+    memory = "128Mi"
   }
 }
 
@@ -64,8 +64,8 @@ variable "argocd_server_limits" {
   })
   description = ""
   default = {
-    cpu    = null
-    memory = null
+    cpu    = "400m"
+    memory = "256Mi"
   }
 }
 variable "oidc_config" {
@@ -98,7 +98,7 @@ variable "enable_anonymous_access" {
 variable "help_chat_url" {
   type        = string
   description = "The URL for getting chat help, this will typically be your Slack channel for support"
-  default     = null
+  default     = ""
 }
 variable "helm_chat_text" {
   type        = string
