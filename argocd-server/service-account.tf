@@ -6,5 +6,6 @@ resource "kubernetes_service_account" "server_service_account" {
       "app.kubernetes.io/name" : var.name
     }, local.labels)
   }
+
   automount_service_account_token = false
 }
