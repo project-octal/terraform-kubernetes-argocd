@@ -13,7 +13,7 @@ resource "kubernetes_role_binding" "redis_ha_role_binding" {
   }
   subject {
     kind      = "ServiceAccount"
-    name      = kubernetes_service_account.redis_ha_service_account.metadata.0.name
+    name      = kubernetes_service_account.redis_service_account.metadata.0.name
     namespace = var.namespace
   }
 }
